@@ -1,14 +1,43 @@
 const Router = require("express")
-const User = require('../models/User')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
-const router = new Router()
+const authMidleware = require("../middleware/auth-midleware")
+const Exercises = require('../models/Exercises')
 
-router.post('exercises', async (req, res) => {
+const router = new Router()
+router.use(authMidleware)
+
+router.post('/', async (req, res) => {
     try {
-        // 
+        const {exerName, mesurType} = req.body
+ 
+        const exercises = new Exercises({user: req.params.userId, exerName, mesurType})
+        await exercises.save()
+        return res.json({message: "Exercise was created"})
+
     } catch(e) {
-        // 
+        console.log (e)
+        res.send({message: "Server error"}) 
     }
 })
+
+router.get('/:userId', async (req, res) => {
+    try {
+        const exercises = await Exercises.find({user: new ObjectId})
+
+        if(!exercises) {
+            return res.json({message: "You dont have exercises"})
+        }
+
+        return res.json({
+            exercises: {
+                exerName,
+                mesurType
+            }
+        }) 
+
+    } catch(e) {
+        console.log (e)
+        res.send({message: "Server error"}) 
+    }
+})
+
+module.exports = router
