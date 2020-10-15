@@ -2,16 +2,18 @@ const express = require('express')
 const mogoose = require('mongoose')
 const config = require('config')
 const cors = require('cors')
-const auth = require('./routes/auth')
-const exercises = require('./routes/exercises')
+const authRouter = require('./routes/auth-router')
+const exercisesRouter = require('./routes/exercises-router')
+const workOutRouter = require('./routes/workOut-router')
 
 const app = express()
 const PORT = config.get('serverPort')
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/auth', auth)
-app.use('/api/exercises', exercises)
+app.use('/api/auth', authRouter)
+app.use('/api/exercises', exercisesRouter)
+app.use('/api/workout', workOutRouter)
 
 async function start(){
     try{

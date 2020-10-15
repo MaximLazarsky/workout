@@ -1,8 +1,10 @@
 const {Schema, model, ObjectId} = require('mongoose')
 
 const WorkOut = new Schema({
-    user: [{type: ObjectId, ref: 'User'}],
-    exercises: [{type: ObjectId, ref: 'Exercises'}]
+    userId: {type: Schema.Types.ObjectId, required: true, ref: 'User'},
+    exercisesId: [{
+        type: Schema.Types.ObjectId, required: true, ref: 'Exercises'
+    }]
 })
 
-module.exports = model('WorhOut', WorkOut)
+module.exports = model('WorkOut', WorkOut)
