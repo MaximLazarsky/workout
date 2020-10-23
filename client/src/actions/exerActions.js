@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {addExer, getExers, delExer} from '../reducers/exerReduser'
+import {addExer, getExers, delExer, uptExer} from '../reducers/exerReduser'
 
 export const addNewExer = (mesurType, exerName, userId) => {
     return async(dispatch) => {
@@ -63,6 +63,18 @@ export const deleteExerFromExers = (id) => {
 
 export const udateExers = (id) => {
     return async(dispatch) => {
-        // TODO
+        try {
+
+            const response = await axios.put(`http://localhost:5000/api/exercises/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+                }
+            })
+
+            await dispatch(uptExer())
+
+        } catch(e) {
+            console.log(e)
+        }
     }
 }
