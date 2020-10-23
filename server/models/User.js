@@ -5,7 +5,7 @@ const User = new Schema ({
     password: { type: String, required: true },
     // workOut: [{ type: ObjectId, ref: 'WorkOut'}],
     // exercises: [{type: ObjectId, ref: 'Exercises'}]
-    verificationCode: {type: Number},
+    verificationCode: {type: String},
     active: {type: Boolean}
 })
 

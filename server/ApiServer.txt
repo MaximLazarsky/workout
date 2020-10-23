@@ -1,0 +1,39 @@
+Work with users:
+
+POST for all
+
+add user:
+/api/auth/registration
+
+verify user email:
+/api/auth/verification
+
+login user:
+/api/auth/login
+
+
+Work with exercises: 
+
+add exersise:
+POST/api/exercises/:userId
+
+take list of exersises:
+GET/api/exercises/:userId
+
+update exersise:
+PUT/api/exercises/:id
+
+delete exersise:
+DELETE/api/exercises/:id
+
+Work with workout:
+
+add workout:
+POST/api/workout/:userId
+
+take list of workouts:
+GET/api/workout/:userId
+
+update workout:
+PUT/api/workout/:id
+

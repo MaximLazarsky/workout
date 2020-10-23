@@ -11,8 +11,8 @@ const options = {
 
 passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
     try{
-        const {_id} = jwtPayload
-        const user = await User.findOne(_id).select('_id')
+        const {id} = jwtPayload
+        const user = await User.findById(id).select('_id')
 
         if (user) {
             return done(null, user);
@@ -26,9 +26,9 @@ passport.use(new JwtStrategy(options, async (jwtPayload, done) => {
 })
 )
 
-// const useAuthMW = () =>  passport.authenticate('jwt',{session: false})
+const useAuthMW = () =>  passport.authenticate('jwt',{session: false})
 
 module.exports = {
     passport,
-    // useAuthMW
+    useAuthMW
  }

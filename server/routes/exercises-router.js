@@ -1,22 +1,21 @@
 const Router = require("express")
-const {passport} = require("../middleware/auth-midleware")
+const {passport, useAuthMW} = require("../middleware/auth-midleware")
 const Exercises = require('../models/Exercises')
 const WorkOut = require('../models/WorkOut')
 
 const router = new Router()
 
+router.use(useAuthMW())
+
 router.put('/:id', async (req, res) => {
 
     try{
         const {exerName, mesurType} = req.body
-        let exercises = await Exercises.findByIdAndUpdate(req.params.id)
+        let exercise = await Exercises.findByIdAndUpdate({_id: req.params.id}, {exerName, mesurType}, {new: true})
         
-        exercises.exerName = exerName
-        exercises.mesurType = mesurType
-        await exercises.save()
         return res.json({
             message:"Exsercise was update",
-            exercises
+            exercise
     })
 
     } catch(e) {
@@ -47,16 +46,14 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.use(passport.authenticate('jwt',{session: false}))
-
 router.post('/:userId', async (req, res) => {
     try {
 
-        const exercises = new Exercises({userId: req.params.userId, exerName: req.body.exerName, mesurType: req.body.mesurType})
-        await exercises.save()
+        const exercise = new Exercises({userId: req.params.userId, exerName: req.body.exerName, mesurType: req.body.mesurType})
+        await exercise.save()
         return res.json({
             message: "Exercise was created",
-            exercises
+            exercise
         })
 
     } catch(e) {

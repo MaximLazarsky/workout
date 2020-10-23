@@ -3,6 +3,9 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const {passport, useAuthMW} = require("../middleware/auth-midleware")
+const ExtractJwt = require('passport-jwt').ExtractJwt
+
 const router = new Router()
 
 router.post('/registration', async (req, res) => {
@@ -17,12 +20,15 @@ router.post('/registration', async (req, res) => {
 
         const hashPassword = await bcrypt.hash(password, 10)
 
-        const verificationCode = Math.floor((Math.random()*10000))
+        const verificationCode = `${Math.floor((Math.random()*10000))}`
 
         const user = new User({email, password: hashPassword, verificationCode, active:false})
+
+        const link = `/verify?email=${email}`
+
         await user.save()
-        console.log(verificationCode)
-        return res.json({message: "User was created", verificationCode})
+        console.log(verificationCode, link)
+        return res.json({link, verificationCode})
 
     } catch(e) {
         console.log (e)
@@ -47,7 +53,8 @@ router.post('/verification', async (req, res) => {
        
        return res.json({
            token,
-           message: "verefication done"
+           message: "verefication done",
+           active: user.active
        })
 
     } catch(e) {
@@ -80,6 +87,24 @@ router.post('/login', async (req, res) => {
        return res.json({
            token
        })
+
+    } catch(e) {
+        console.log (e)
+        res.send({message: "Server error"})
+    }
+})
+
+router.get('/', useAuthMW(), async(req, res) => {
+    try {
+    
+        const user = await User.findById(req.user._id)
+        const userId = user._id
+        const email = user.email
+
+        return res.json({
+            userId,
+            email
+        })
 
     } catch(e) {
         console.log (e)
