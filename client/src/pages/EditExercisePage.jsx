@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {deleteExerFromExers} from '../actions/exerActions'
+import {deleteExerFromExers, udateExers} from '../actions/exerActions'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
     form: {
       border: "solid 2px #d1d1d1",
       width: '90%',
-      height: '700px',
+      height: '500px',
       overflowY: 'scroll',
       display: "flex",
       flexDirection: "column",
       padding: "20px",
-      boxSizing: "borderBox",
+      boxSizing: "borderBox"
     },
     input: {
       marginTop: "20px"
@@ -48,10 +48,9 @@ export default function EditExercisePage() {
 
     const [mesurType, setMesurType] = useState('')
     const [exerName, setExerName] = useState('')
+    const [id, setId] = useState('')
 
-    const handleChange = (event) => {
-        setMesurType(event.target.value)
-    };
+    let newList = [{id, exerName, mesurType}]
 
     return(
         <div
@@ -60,7 +59,8 @@ export default function EditExercisePage() {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "100vh"
+            height: "60vh",
+            marginTop: "150px"
             }}
         >
             <form className={classes.form} noValidate autoComplete="off"> 
@@ -81,7 +81,10 @@ export default function EditExercisePage() {
                         id="standard-basic"  
                         label="Exercise name" 
                         defaultValue = {props.exerName}
-                        onChange={(event) => setExerName(event.target.value)}
+                        onBlur={(event) =>{
+                             setExerName(event.target.value)
+                             setId(props._id)
+                            }}
                         style={{
                             width: "150px",
                             marginRight: "50px"
@@ -102,7 +105,13 @@ export default function EditExercisePage() {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         defaultValue={props.mesurType}
-                        onChange={handleChange}
+                        onChange={
+                            (event)=> {
+                                setMesurType(event.target.value)
+                                setId(props._id)
+                            }
+                            // (event) => {console.log(event.target.value)}
+                        }
                         style={{
                             width: "120px",
                             // marginRight: "50px"
@@ -145,7 +154,7 @@ export default function EditExercisePage() {
                             marginRight: "15px"
                         }}
                         onClick = {()=>{
-                            dispatch(deleteExerFromExers(props._id))
+                            dispatch(deleteExerFromExers(id, mesurType, exerName))
                             if (userId) {
                                 dispatch(getListExers(userId))
                             }
@@ -154,13 +163,18 @@ export default function EditExercisePage() {
                 </div>    
             ))}
             <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{
-                            marginRight: "15px"
-                        }}
-                        onClick = {()=>{
-                        }}
+                variant="contained"
+                color="secondary"
+                style={{
+                     marginRight: "15px",
+                     width: "200px"
+                }}
+                onClick = {()=>{
+                    dispatch(udateExers(newList))
+                    if(userId) {
+                        dispatch(getListExers(userId))
+                    }
+                }}
             >
                 Update exercises
             </Button>    

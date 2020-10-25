@@ -23,12 +23,12 @@ export default function exerReducer(state = defaultState, action) {
         case DEL_EXER: {
             return {
                 ...state
-                // userExer: action.payload
             }
         }
         case UPD_EXER: {
             return {
-
+                ...state,
+                userExer: action.payload
             }
         }
         default: 

@@ -34,7 +34,7 @@ router.post('/:userId', async (req, res) => {
             message: "Workout was create",
             workOut
         })
-
+        
     } catch(e) {
         console.log (e)
         res.send({message: "Server error"}) 

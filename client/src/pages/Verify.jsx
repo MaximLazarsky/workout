@@ -6,6 +6,7 @@ import queryString from 'query-string'
 import { useDispatch } from "react-redux"
 import { verifycation } from "../actions/userActions"
 import { useState } from "react"
+import history from '../history'  
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +73,10 @@ export default function VerifyPage(props) {
               variant="contained" 
               className={classes.input} 
               color="primary"
-              onClick={() => dispatch(verifycation(string.email, verifycationCode))}
+              onClick={() => {
+                dispatch(verifycation(string.email, verifycationCode))
+                history.push("/dashboard")
+              }}
               >
               VERIFY EMAIL
             </Button>

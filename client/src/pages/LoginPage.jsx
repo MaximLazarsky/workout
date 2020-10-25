@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import { useDispatch } from "react-redux"
 import {login} from '../actions/userActions'
 import { useState } from "react"
+import history from '../history'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -67,7 +68,10 @@ export default function LoginPage() {
               variant="contained" 
               className={classes.input} 
               color="primary"
-              onClick={()=>dispatch(login(email, password))}
+              onClick={()=>{
+                dispatch(login(email, password))
+                history.push("/dashboard")
+              }}
             >
               Sing In
             </Button>

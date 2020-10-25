@@ -61,17 +61,19 @@ export const deleteExerFromExers = (id) => {
     }
 }
 
-export const udateExers = (id) => {
+export const udateExers = (newList) => {
     return async(dispatch) => {
         try {
 
-            const response = await axios.put(`http://localhost:5000/api/exercises/${id}`, {
+            const response = await axios.put(`http://localhost:5000/api/exercises/`, {newList},
+            {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('Authorization')}`
                 }
             })
-
-            await dispatch(uptExer())
+        
+            console.log(response.data)
+            await dispatch(uptExer(response.data.newList))
 
         } catch(e) {
             console.log(e)

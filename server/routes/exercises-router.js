@@ -7,15 +7,28 @@ const router = new Router()
 
 router.use(useAuthMW())
 
-router.put('/:id', async (req, res) => {
+router.put('/', async (req, res) => {
 
     try{
-        const {exerName, mesurType} = req.body
-        let exercise = await Exercises.findByIdAndUpdate({_id: req.params.id}, {exerName, mesurType}, {new: true})
+
+        const newList = req.body.newList
         
+        console.log(newList)
+        for (let exercise of newList) {
+            
+            exercise = await Exercises.findByIdAndUpdate(
+                {_id: exercise.id},
+                {exerName: exercise.exerName, mesurType: exercise.mesurType},
+                {new:true}
+                )
+            
+            await exercise.save
+        }
+        
+
         return res.json({
             message:"Exsercise was update",
-            exercise
+            newList
     })
 
     } catch(e) {
