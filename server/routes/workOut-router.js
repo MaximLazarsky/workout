@@ -4,6 +4,8 @@ const WorkOut = require('../models/WorkOut')
 
 const router = new Router()
 
+router.use(useAuthMW())
+
 router.put('/:id', async (req, res) => {
 
     try{
@@ -21,14 +23,12 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.use(useAuthMW())
-
 router.post('/:userId', async (req, res) => {
     try {
         date = new Date(Date.now())
         dateToday = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
 
-        const workOut = new WorkOut({userId: req.params.userId, exercisesId: req.body.exercisesId, date: req.body.date || dateToday}) 
+        const workOut = new WorkOut({userId: req.params.userId, exercises: req.body.exercises, date: req.body.date || dateToday}) 
         await workOut.save()
         return res.json({
             message: "Workout was create",

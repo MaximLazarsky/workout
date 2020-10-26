@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {addExer, getExers, delExer, uptExer} from '../reducers/exerReduser'
+import {addExer, getExers, delExer, updExer} from '../reducers/exerReduser'
 
 export const addNewExer = (mesurType, exerName, userId) => {
     return async(dispatch) => {
@@ -52,7 +52,7 @@ export const deleteExerFromExers = (id) => {
                 }
             })
 
-            await dispatch(delExer(response.data))
+            dispatch(delExer(response.data))
 
         } catch(e) {
             console.log(e)
@@ -61,19 +61,32 @@ export const deleteExerFromExers = (id) => {
     }
 }
 
-export const udateExers = (newList) => {
+export const udateExers = (idList, nameList, typeList) => {
+
+    const exercisesList = []
+    for (let i = 0 ; i <= idList.length-1; i++) {
+        let exercise = {
+            id: idList[i],
+            exerName: nameList[i],
+            mesurType: typeList[i]
+        }
+        exercisesList.push(exercise)
+    }
+
+    console.log(exercisesList)
+    
     return async(dispatch) => {
         try {
 
-            const response = await axios.put(`http://localhost:5000/api/exercises/`, {newList},
+            const response = await axios.put(`http://localhost:5000/api/exercises/`, {exercisesList},
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('Authorization')}`
                 }
             })
         
-            console.log(response.data)
-            await dispatch(uptExer(response.data.newList))
+            console.log("response", response.data.exercisesList)
+            dispatch(updExer(response.data.exercisesList))
 
         } catch(e) {
             console.log(e)

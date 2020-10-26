@@ -15,18 +15,46 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles((theme) => ({
-    form: {
-      border: "solid 2px #d1d1d1",
-      width: '90%',
-      height: '500px',
-      overflowY: 'scroll',
-      display: "flex",
-      flexDirection: "column",
-      padding: "20px",
-      boxSizing: "borderBox"
+    main: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "60vh",
+        marginTop: "150px"
     },
-    input: {
-      marginTop: "20px"
+    form: {
+        border: "solid 2px #d1d1d1",
+        width: '90%',
+        height: '500px',
+        overflowY: 'scroll',
+        display: "flex",
+        flexDirection: "column",
+        padding: "20px",
+        boxSizing: "borderBox"
+    },
+    exerItem : {
+        display: 'flex',
+        margin: '10px 0 50px'
+    },
+    textField : {
+        width: "150px",
+        marginLeft: "50px"
+    },
+    inputLabel: {
+        fontSize: "12px",
+        width: "20px",
+        marginRight: "70px"
+    },
+    select: {
+        width: "200px"
+    },
+    button: {
+        marginRight: "15px"
+    },
+    buttonOrder: {
+        background: "#ffb74d",
+        color: "#fff"
     }
   }))
 
@@ -46,68 +74,41 @@ export default function NewWorkoutPage() {
 
     const {userExer} = useSelector((state)=> state.exer)
 
-    const [mesurType, setMesurType] = useState('')
     const [exerName, setExerName] = useState('')
 
     return(
-        <div
-            style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "60vh",
-            marginTop: "150px"
-            }}
-        >
+        <div className = {classes.main}>
             <form className={classes.form} noValidate autoComplete="off"> 
             <h3>
-                Edit exercises
+                New workout
             </h3>
 
             <Button
                 variant="contained"
                 color="secondary"
                 style={{
-                     marginRight: "15px",
                      width: "200px",
                      marginBottom: "30px"
                 }}
+                className={classes.button}
                 onClick = {()=>{history.push("/new-exercise")}}
             >
                 Add exercise
             </Button>    
 
             {userExer && userExer.map((props, index)=>(
-                <div 
-                    style={{
-                        display: 'flex',
-                        margin: '10px 0 50px'
-                    }}
-                    key={props._id}
-                    > 
+                <div className={classes.exerItem} key={props._id}> 
                     <div>
                         <InputLabel 
-                            id="demo-simple-select-label"
-                            style={{
-                                fontSize: "12px",
-                                width: "100px",
-                                marginRight: "70px"
-                            }}
-                            >
+                            id="demo-simple-select-label" className={classes.textField}>
                                Exercise name
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
+                            className={classes.select}
                             defaultValue={props.exerName}
-                            // onChange={
-                            //     (event)=> {} 
-                            // }
-                            style={{
-                                width: "200px",
-                                // marginRight: "50px"
-                            }}
+                            onChange={(event)=> {}}
                         >
 
                         {userExer && userExer.map((props, index)=>(
@@ -116,69 +117,50 @@ export default function NewWorkoutPage() {
                         </Select>
                     </div>
                     <TextField 
-                        id="standard-basic"  
-                        label="Reapets" 
+                        id="standard-basic"
+                        className={classes.textField}  
+                        label="Repeats" 
                         value = ""
                         // onChange={(event) =>{}}
-                        style={{
-                            width: "150px",
-                            marginLeft: "50px"
-                        }}
                     />
 
                     <TextField 
-                        id="standard-basic"  
+                        id="standard-basic"
+                        className={classes.textField}  
                         label="Measurment" 
                         value = ""
                         // onChange={(event) =>{}}
-                        style={{
-                            width: "150px",
-                            marginLeft: "50px"
-                        }}
                     />
 
+                    <p style={{width: "150px", marginLeft: "20px", fontFamily: "Roboto"}}>{props.mesurType}</p>
+                        
                     <Button
                         variant="contained"
+                        className={`${classes.button} ${classes.buttonOrder}`}
                         startIcon={<ArrowDownwardIcon />}
-                        style={{
-                            marginRight: "15px",
-                            marginLeft: "50px",
-                            background: "#ffb74d",
-                            color: "#fff"
-                        }}
-                        onClick = {()=>{}}
+                        // onClick = {()=>{}}
                     />
 
                     <Button
                         variant="contained"
-                        color="secondary"
+                        className={`${classes.button} ${classes.buttonOrder}`}
                         startIcon={<ArrowUpwardIcon />}
-                        style={{
-                            marginRight: "15px",
-                            background: "#ffb74d",
-                            color: "#fff"
-                        }}
-                        onClick = {()=>{   }}
+                        // onClick = {()=>{}}
                     />
 
                     <Button
                         variant="contained"
                         color="secondary"
                         startIcon={<DeleteIcon />}
-                        style={{
-                            marginRight: "15px"
-                        }}
-                        onClick = {()=>{}}
+                        className={classes.button}
+                        // onClick = {()=>{}}
                     />
                 </div>    
             ))}
             <Button
                 variant="contained"
                 color="secondary"
-                style={{
-                     marginRight: "15px",
-                     width: "200px"
-                }}
+                style={{marginRight: "15px", width: "200px"}}
                 // onClick = {()=>{}}
             >
                 Create workout

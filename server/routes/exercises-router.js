@@ -11,24 +11,17 @@ router.put('/', async (req, res) => {
 
     try{
 
-        const newList = req.body.newList
-        
-        console.log(newList)
-        for (let exercise of newList) {
-            
-            exercise = await Exercises.findByIdAndUpdate(
+        const exercisesList = await Promise.all(req.body.exercisesList.map(async (exercise) => {
+            return  await Exercises.findByIdAndUpdate(
                 {_id: exercise.id},
                 {exerName: exercise.exerName, mesurType: exercise.mesurType},
                 {new:true}
-                )
-            
-            await exercise.save
-        }
+            )
+        }))
         
-
         return res.json({
             message:"Exsercise was update",
-            newList
+            exercisesList
     })
 
     } catch(e) {

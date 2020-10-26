@@ -14,19 +14,47 @@ import {deleteExerFromExers, udateExers} from '../actions/exerActions'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-const useStyles = makeStyles((theme) => ({
-    form: {
-      border: "solid 2px #d1d1d1",
-      width: '90%',
-      height: '500px',
-      overflowY: 'scroll',
-      display: "flex",
-      flexDirection: "column",
-      padding: "20px",
-      boxSizing: "borderBox"
+const useStyles = makeStyles(() => ({
+    main: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "60vh",
+        marginTop: "150px"
     },
-    input: {
-      marginTop: "20px"
+    form: {
+        border: "solid 2px #d1d1d1",
+        width: '90%',
+        height: '500px',
+        overflowY: 'scroll',
+        display: "flex",
+        flexDirection: "column",
+        padding: "20px",
+        boxSizing: "borderBox"
+    },
+    exerItem : {
+        display: 'flex',
+        margin: '10px 0 50px'
+    },
+    textField : {
+        width: "150px",
+        marginRight: "50px"
+    },
+    inputLabel: {
+        fontSize: "12px",
+        width: "20px",
+        marginRight: "70px"
+    },
+    select: {
+        width: "120px"
+    },
+    button: {
+        marginRight: "15px"
+    },
+    buttonOrder: {
+        background: "#ffb74d",
+        color: "#fff"
     }
   }))
 
@@ -46,76 +74,68 @@ export default function EditExercisePage() {
 
     const {userExer} = useSelector((state)=> state.exer)
 
-    const [mesurType, setMesurType] = useState('')
-    const [exerName, setExerName] = useState('')
-    const [id, setId] = useState('')
+    const mesurTypeDefault = (userExer.map((props)=>{return props.mesurType}))
+    const exerNameDefault =  userExer.map((props)=>{return props.exerName})
+    const exerIdDefault =  userExer.map((props)=>{return props._id})
+    const [mesurType, setMesurType] = useState(mesurTypeDefault)
+    const [exerName, setExerName] = useState(exerNameDefault)
 
-    let newList = [{id, exerName, mesurType}]
+   function onBlurSetName(event, index) {
+        const newExerName = [...exerName]
+        newExerName[index] = event.target.value
+        setExerName(newExerName)
+   }
+
+   function onChangeSetType(event, index) {
+        const newMesurType = [...mesurType];
+        newMesurType[index] = event.target.value
+        setMesurType(newMesurType)
+   }
+
+   function onClickDlete(id) {
+        dispatch(deleteExerFromExers(id))
+        if (userId) {
+            dispatch(getListExers(userId))
+        }
+    }
+
+    function onClickUpdate() {
+        dispatch(udateExers(
+            exerIdDefault, 
+            exerName, 
+            mesurType
+            ))
+        if(userId) {
+            dispatch(getListExers(userId))
+        }
+    }
 
     return(
-        <div
-            style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "60vh",
-            marginTop: "150px"
-            }}
-        >
+        <div className={classes.main}>
             <form className={classes.form} noValidate autoComplete="off"> 
             <h3>
                 Edit exercises
             </h3>
 
             {userExer && userExer.map((props, index)=>(
-                <div 
-                    style={{
-                        display: 'flex',
-                        margin: '10px 0 50px'
-                    }}
-                    key={props._id}
-                    > 
-
+                <div className={classes.exerItem} key={props._id}> 
                     <TextField 
-                        id="standard-basic"  
+                        className={classes.textField}
+                        id={props._id} 
                         label="Exercise name" 
                         defaultValue = {props.exerName}
-                        onBlur={(event) =>{
-                             setExerName(event.target.value)
-                             setId(props._id)
-                            }}
-                        style={{
-                            width: "150px",
-                            marginRight: "50px"
-                        }}
+                        onBlur={(event) =>{onBlurSetName(event, index)}}
                     />
 
-                    <InputLabel 
-                        id="demo-simple-select-label"
-                        style={{
-                            fontSize: "12px",
-                            width: "20px",
-                            marginRight: "70px"
-                        }}
-                        >
+                    <InputLabel id={props._id} className={classes.inputLabel}>
                             Measurment <br/> Type
                     </InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        id={props._id}
                         defaultValue={props.mesurType}
-                        onChange={
-                            (event)=> {
-                                setMesurType(event.target.value)
-                                setId(props._id)
-                            }
-                            // (event) => {console.log(event.target.value)}
-                        }
-                        style={{
-                            width: "120px",
-                            // marginRight: "50px"
-                        }}
+                        className={classes.select}
+                        onChange={(event)=> {onChangeSetType(event, index)}}
                     >
                         <MenuItem value={"kilograms"}>kilograms</MenuItem>
                         <MenuItem value={"kilomiters"}>kilomiters</MenuItem>
@@ -125,56 +145,33 @@ export default function EditExercisePage() {
                     <Button
                         variant="contained"
                         startIcon={<ArrowDownwardIcon />}
-                        style={{
-                            marginRight: "15px",
-                            marginLeft: "100px",
-                            background: "#ffb74d",
-                            color: "#fff"
-                        }}
-                        onClick = {()=>{}}
+                        className={`${classes.button} ${classes.buttonOrder}`}
+                        style={{marginLeft: "100px"}}
+                        // onClick = {()=>{}}
                     />
 
                     <Button
                         variant="contained"
-                        color="secondary"
                         startIcon={<ArrowUpwardIcon />}
-                        style={{
-                            marginRight: "15px",
-                            background: "#ffb74d",
-                            color: "#fff"
-                        }}
-                        onClick = {()=>{   }}
+                        className={`${classes.button} ${classes.buttonOrder}`}
+                        // onClick = {()=>{   }}
                     />
 
                     <Button
                         variant="contained"
                         color="secondary"
                         startIcon={<DeleteIcon />}
-                        style={{
-                            marginRight: "15px"
-                        }}
-                        onClick = {()=>{
-                            dispatch(deleteExerFromExers(id, mesurType, exerName))
-                            if (userId) {
-                                dispatch(getListExers(userId))
-                            }
-                        }}
+                        className={classes.button}
+                        onClick = {()=>{onClickDlete(props._id)}}
                     />
                 </div>    
             ))}
             <Button
                 variant="contained"
                 color="secondary"
-                style={{
-                     marginRight: "15px",
-                     width: "200px"
-                }}
-                onClick = {()=>{
-                    dispatch(udateExers(newList))
-                    if(userId) {
-                        dispatch(getListExers(userId))
-                    }
-                }}
+                className={classes.button}
+                style={{width: "200px"}}
+                onClick = {()=>{onClickUpdate()}}
             >
                 Update exercises
             </Button>    

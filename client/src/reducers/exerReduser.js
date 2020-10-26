@@ -39,4 +39,4 @@ export default function exerReducer(state = defaultState, action) {
 export const addExer = (payload) => ({type: ADD_EXER, payload})
 export const getExers = (payload) => ({type: GET_EXERS, payload})
 export const delExer = (payload) => ({type: DEL_EXER, payload})
-export const uptExer = (payload) => ({type: UPD_EXER, payload})
+export const updExer = (payload) => ({type: UPD_EXER, payload})
