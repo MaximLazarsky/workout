@@ -1,8 +1,8 @@
-import DashboardPage from '../pages/DashboardPage'
-import NewExercisePage from '../pages/NewExercisePage'
-import EditExercisePage from '../pages/EditExercisePage'
-import NewWorkoutPage from '../pages/NewWorkoutPage'
-import EditWorkoutPage from '../pages/EditWorkoutPage'
+import DashboardPage from '../pages/dashboard/DashboardPage'
+import NewExercisePage from '../pages/new-exercise/NewExercisePage'
+import EditExercisePage from '../pages/edit-exercise/EditExercisePage'
+import NewWorkoutPage from '../pages/new-workout/NewWorkoutPage'
+import EditWorkoutPage from '../pages/edit-workout/EditWorkoutPage'
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import DashboardIcon from '@material-ui/icons/Dashboard'
 

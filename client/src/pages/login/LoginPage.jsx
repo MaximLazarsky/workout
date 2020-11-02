@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { useDispatch } from "react-redux"
-import {login} from '../actions/userActions'
+import {login} from '../../actions/userActions'
 import { useState } from "react"
-import history from '../history'
+import history from '../../history'
 
 const useStyles = makeStyles((theme) => ({
   form: {

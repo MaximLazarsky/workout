@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {getListExers} from '../actions/exerActions'
+import {getListExers} from '../../actions/exerActions'
 import { makeStyles } from '@material-ui/core/styles'
-import history from '../history'
+import history from '../../history'
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -74,7 +74,8 @@ export default function NewWorkoutPage() {
 
     const {userExer} = useSelector((state)=> state.exer)
 
-    const [exerName, setExerName] = useState('')
+    const [exerciseId, setExerciseId] = useState()
+
 
     return(
         <div className = {classes.main}>

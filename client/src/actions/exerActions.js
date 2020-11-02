@@ -72,8 +72,6 @@ export const udateExers = (idList, nameList, typeList) => {
         }
         exercisesList.push(exercise)
     }
-
-    console.log(exercisesList)
     
     return async(dispatch) => {
         try {
@@ -85,7 +83,6 @@ export const udateExers = (idList, nameList, typeList) => {
                 }
             })
         
-            console.log("response", response.data.exercisesList)
             dispatch(updExer(response.data.exercisesList))
 
         } catch(e) {
@@ -93,3 +90,4 @@ export const udateExers = (idList, nameList, typeList) => {
         }
     }
 }
+

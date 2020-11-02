@@ -77,7 +77,9 @@ export default function TopNavMenu() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem onClick={()=>{dispatch(logoutUser())}}>
+        <StyledMenuItem 
+        onClick={()=>{dispatch(logoutUser())}}
+        >
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>

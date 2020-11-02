@@ -8,7 +8,8 @@ export default function workoutReducer(state = defaultState, action){
     switch(action.type){
         case ADD_WORKOUT: {
             return {
-                ...state
+                ...state,
+                userWorkouts: action.payload
             }
         } 
         default: {
@@ -16,3 +17,5 @@ export default function workoutReducer(state = defaultState, action){
         }
     }
 }
+
+export const addWorkout = (payload) => ({type: ADD_WORKOUT, payload})

@@ -17,8 +17,15 @@ app.use('/api/workout', workOutRouter)
 
 async function start(){
     try{
-        await mogoose.connect(config.get('dbUrl'))
-
+        
+        await mogoose.connect(config.get('dbUrl'),{useNewUrlParser: true, useUnifiedTopology: true }, 
+        (err) => {
+            if (err)
+                console.error(err);
+            else
+                console.log("Connected to the mongodb"); 
+        })
+        
         app.listen(PORT, () => {
             console.log("server has started on:", PORT)
         })

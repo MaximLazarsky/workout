@@ -1,6 +1,6 @@
 import AcountBoxIcon from '@material-ui/icons/AccountBox'
-import LoginPage from '../pages/LoginPage'
-import RegistrationPage from '../pages/RegistrationPage'
+import LoginPage from '../pages/login/LoginPage'
+import RegistrationPage from '../pages/registration/RegistrationPage'
 
 const AuthRoutes = [
     {   
