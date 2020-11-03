@@ -1,11 +1,14 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
+import {useHistory} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {userLoadingSelector, userIsAuthSelector} from '../../redux/selectors'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { useDispatch } from "react-redux"
 import {login} from '../../actions/userActions'
-import { useState } from "react"
-import history from '../../history'
+// import history from '../../history'
+import {getLogin, setUser, getLoginAuth} from "../../redux/actions/auth"
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -22,13 +25,26 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function LoginPage() {
-
+    const isUserLoading = useSelector(userLoadingSelector)
+    const isUserAuth = useSelector(userIsAuthSelector)
     const classes = useStyles();
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState ("")
+
+    useEffect(() => {
+      if (isUserAuth) history.push('/dashboard')
+
+    }, [isUserAuth])
+
+
+    console.log({email, password})
+    const onLoginClick = async () => {
+      dispatch(getLoginAuth({password, email}))
+    }
 
     return (
         <div 
@@ -68,14 +84,12 @@ export default function LoginPage() {
               variant="contained" 
               className={classes.input} 
               color="primary"
-              onClick={()=>{
-                dispatch(login(email, password))
-                history.push("/dashboard")
-              }}
+              onClick={onLoginClick}
             >
               Sing In
             </Button>
           </form>
+          {isUserLoading && <h1>Loading...</h1>}
         </div>
       )
 }

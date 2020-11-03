@@ -1,0 +1,4 @@
+export const GET_LOGIN_AUTH = "GET_LOGIN_AUTH"
+export const GET_USER = "GET_USER"
+export const TOGGLE_USER_LOADING = 'TOGGLE_USER_LOADING'
+export const TOGGLE_USER_IS_AUTH = 'TOGGLE_USER_IS_AUTH'

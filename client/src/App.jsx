@@ -16,19 +16,19 @@ function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if(localStorage.getItem('Authorization')) {
-      dispatch(setAutUser()) 
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(localStorage.getItem('Authorization')) {
+  //     dispatch(setAutUser()) 
+  //   }
+  // }, [])
 
-  const {userId} = useSelector((state)=> state.user.currentUser)
+  // const {userId} = useSelector((state)=> state.user.currentUser)
 
-  useEffect(()=>{
-    if(localStorage.getItem('Authorization') && userId) {
-      dispatch(getListExers(userId))
-    }
-  })
+  // useEffect(()=>{
+  //   if(localStorage.getItem('Authorization') && userId) {
+  //     dispatch(getListExers(userId))
+  //   }
+  // })
 
   const user = useSelector((state) => state.user)
   const {isAuth} = user
