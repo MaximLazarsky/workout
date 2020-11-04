@@ -1,4 +1,13 @@
+// TYPES for AUTH_ACTIONS
 export const GET_LOGIN_AUTH = "GET_LOGIN_AUTH"
-export const GET_USER = "GET_USER"
 export const TOGGLE_USER_LOADING = 'TOGGLE_USER_LOADING'
 export const TOGGLE_USER_IS_AUTH = 'TOGGLE_USER_IS_AUTH'
+export const GET_USER_DATA = 'GET_USER_DATA'
+export const LOGOUT = 'LOGOUT'
+export const VERIFY = 'VERIFY'
+export const REGISTER_USER = "REGISTER_USER"
+export const CHECK_IS_AUTH = 'CHECK_IS_AUTH'
+
+// TYPES for EXER_ACTIONS
+export const GET_USER_EXERCISES = "GET_USER_EXERCISES"
+export const CALL_EXER_LIST = "CALL_EXER_LIST"

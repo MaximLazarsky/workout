@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 
 import {logoutUser} from '../actions/userActions'
 import { useDispatch } from "react-redux"
+import { logout } from '../redux/actions/auth'
 
 const StyledMenu = withStyles({
   paper: {
@@ -78,7 +79,7 @@ export default function TopNavMenu() {
         onClose={handleClose}
       >
         <StyledMenuItem 
-        onClick={()=>{dispatch(logoutUser())}}
+        onClick={()=>{dispatch(logout())}}
         >
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />

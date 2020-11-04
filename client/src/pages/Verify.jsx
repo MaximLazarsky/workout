@@ -7,6 +7,10 @@ import { useDispatch } from "react-redux"
 import { verifycation } from "../actions/userActions"
 import { useState } from "react"
 import history from '../history'  
+import {useSelector} from 'react-redux'
+import {userLoadingSelector, userIsAuthSelector} from '../redux/selectors'
+import {verify} from '../redux/actions/auth'
+import { useEffect } from "react"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,15 +31,24 @@ export default function VerifyPage(props) {
 
   const { location } = props
 
+    const isUserLoading = useSelector(userLoadingSelector)
+    const isUserAuth = useSelector(userIsAuthSelector)
+
     const classes = useStyles();
 
     const string = queryString.parse(location.search)
 
     const dispatch = useDispatch()
 
-    const [verifycationCode, setVerificationCode] = useState ("")
+    const [verificationCode, setVerificationCode] = useState ("")
 
+    useEffect(() => {
+      if (isUserAuth) history.push('/dashboard')
+    }, [isUserAuth])
 
+    const onVerifyClick = async() => {
+      dispatch(verify({email: string.email, verificationCode}))
+    }
     return (
         <div 
         style={{
@@ -66,21 +79,18 @@ export default function VerifyPage(props) {
             <TextField 
               id="standard-basic"  
               label="VerificationCode" 
-              value={verifycationCode}
+              value={verificationCode}
               onChange = {(event) => setVerificationCode(event.target.value)}
             />
             <Button 
               variant="contained" 
               className={classes.input} 
               color="primary"
-              onClick={() => {
-                dispatch(verifycation(string.email, verifycationCode))
-                history.push("/dashboard")
-              }}
-              >
+              onClick={onVerifyClick}>
               VERIFY EMAIL
             </Button>
           </form>
+          {isUserLoading && <h1>Loading...</h1>}
         </div>
       )
 }

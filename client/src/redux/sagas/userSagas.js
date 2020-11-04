@@ -1,45 +1,92 @@
-import axios from 'axios'
-import { GET_LOGIN, SET_USER } from '../actions/types'
-import {GET_LOGIN_AUTH, TOGGLE_USER_LOADING, TOGGLE_USER_IS_AUTH} from '../types'
+import {
+    GET_LOGIN_AUTH, 
+    TOGGLE_USER_LOADING, 
+    LOGOUT, 
+    VERIFY, 
+    REGISTER_USER, 
+    CHECK_IS_AUTH
+} from '../types'
+
 import { takeLatest, put, call } from "redux-saga/effects"
-import {fetchLoginUser} from '../../services/httpService'
-import {toggleUserIsAuth} from '../actions/auth'
+import {
+    fetchLoginUser, 
+    fetchGetUserData, 
+    fetchVerifyUser, 
+    fetchRegisterUser
+} from '../../services/httpService'
+
+import {toggleUserIsAuth, getUserData} from '../actions/auth'
 
 const loginUser = function*({payload}) {
     const {email, password} = payload
-    console.log('in saga', email, password)
     yield put({type: TOGGLE_USER_LOADING})
     
     try {
         const data = yield call(fetchLoginUser, {email, password})
-        console.log({data})
-        localStorage.setItem('Authorization', data.token)
-        // yield put({type: GET_LOGIN})  
+        localStorage.setItem('Authorization', data.token)  
         yield put({type: TOGGLE_USER_LOADING})
-        yield put(toggleUserIsAuth())
-        yield true
+        yield put({type: CHECK_IS_AUTH})
     } catch(e) {
         console.log({e}) 
         yield put({type: TOGGLE_USER_LOADING})  
-        yield false
     }
 }
 
-const setLoginUser = function*() {
+const getAuthUserData = function*() {
+
     try {
-        const response = yield axios.get('http://localhost:5000/api/auth/', {
+        const data = yield call(fetchGetUserData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+            Authorization: `Bearer ${localStorage.getItem('Authorization')}`
             }
         })
 
-        yield console.log(response.data)
+        yield put(getUserData(data))
+        yield put(toggleUserIsAuth())
+    }catch(e) {
+        console.log({e}) 
+    }
+}
+
+const logoutUser = function*() {
+    try {
+        localStorage.removeItem('Authorization')
+        yield put(toggleUserIsAuth())
     } catch(e) {
-        yield console.log(e)
+        console.log({e})
+    }
+}
+
+const verifyUser = function*({payload}) {
+    const {email, verificationCode} = payload
+    yield put({type: TOGGLE_USER_LOADING})
+    
+    try {
+        const data = yield call(fetchVerifyUser, {email, verificationCode})
+        console.log({data})
+        localStorage.setItem('Authorization', data.token)  
+        yield put({type: TOGGLE_USER_LOADING})
+        yield put({type: CHECK_IS_AUTH})
+    } catch(e) {
+        console.log({e}) 
+        yield put({type: TOGGLE_USER_LOADING})  
+    }
+}
+
+const registrationUser = function*({payload}) {
+    const {email, password} = payload
+
+    try {
+        const data = yield call(fetchRegisterUser, {email, password})
+    } catch(e) {
+        console.log({e}) 
     }
 }
 
 export default [
+    takeLatest(REGISTER_USER, registrationUser),
     takeLatest(GET_LOGIN_AUTH, loginUser),
-    takeLatest(SET_USER, setLoginUser)
+    takeLatest(CHECK_IS_AUTH, getAuthUserData),
+    takeLatest (VERIFY, verifyUser),
+    takeLatest(LOGOUT, logoutUser)
 ]

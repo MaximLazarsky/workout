@@ -9,30 +9,29 @@ import AuthRoutes from './routes/AuthRoutes'
 import IsAuthRoutes from './routes/IsAuthRoutes'
 import Verify from "./pages/Verify"
 import { useEffect } from 'react'
-import {setAutUser} from './actions/userActions'
-import {getListExers} from './actions/exerActions'
+import {checkIsAuth} from "./redux/actions/auth"
+import {callExerList} from "./redux/actions/exer"
+import {userIsAuthSelector} from './redux/selectors'
 
 function App() {
 
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   if(localStorage.getItem('Authorization')) {
-  //     dispatch(setAutUser()) 
-  //   }
-  // }, [])
+  const isUserAuth = useSelector(userIsAuthSelector)
+  useEffect(()=>{
+    if(localStorage.getItem('Authorization'))
+        dispatch(checkIsAuth())
+  },[])
 
-  // const {userId} = useSelector((state)=> state.user.currentUser)
+  const {userId} = useSelector((state)=> state.user.currentUser)
 
-  // useEffect(()=>{
-  //   if(localStorage.getItem('Authorization') && userId) {
-  //     dispatch(getListExers(userId))
-  //   }
-  // })
+  useEffect(()=>{
+    if(localStorage.getItem('Authorization') && userId) {
+      dispatch(callExerList(userId))
+    }
+  },[])
 
-  const user = useSelector((state) => state.user)
-  const {isAuth} = user
-  const routesArr = !isAuth ? AuthRoutes : IsAuthRoutes
+  const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes
 
   return (
           <Container maxWidth="xl">

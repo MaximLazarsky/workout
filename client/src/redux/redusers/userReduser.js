@@ -1,4 +1,10 @@
-import {GET_LOGIN_AUTH, TOGGLE_USER_LOADING, TOGGLE_USER_IS_AUTH} from '../types'
+import {
+        GET_USER_DATA, 
+        TOGGLE_USER_LOADING, 
+        TOGGLE_USER_IS_AUTH, 
+        LOGOUT
+    } from '../types'
+
 const defaultState = {
     currentUser: {},
     isAuth: false,
@@ -17,18 +23,16 @@ export default function userReduser(state = defaultState, action) {
                 ...state,
                 isAuth: !state.isAuth
             }
-
-        case "GET_LOGIN":
+        case GET_USER_DATA:
             return {
                 ...state,
-                isLoading: true
+                currentUser: action.payload
             }
-        case "SET_USER":
+        case LOGOUT: 
             return {
                 ...state,
-                currentUser: action.payload,
-                isAuth: true
-            }    
+                currentUser: {}
+            }
         default:
             return state
     }

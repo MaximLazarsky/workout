@@ -21,6 +21,8 @@ import {NavLink} from 'react-router-dom'
 import AuthRoutes from '../routes/AuthRoutes'
 import IsAuthRoutes from '../routes/IsAuthRoutes'
 
+import {userIsAuthSelector} from '../redux/selectors'
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -66,9 +68,8 @@ function LeftSideBar(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const user = useSelector((state) => state.user)
-  const {isAuth} = user
-  const routesArr = !isAuth ? AuthRoutes : IsAuthRoutes
+  const isUserAuth = useSelector(userIsAuthSelector)
+  const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes
 
   const drawer = (
     <div>
