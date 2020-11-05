@@ -4,7 +4,8 @@ import {
     LOGOUT, 
     VERIFY, 
     REGISTER_USER, 
-    CHECK_IS_AUTH
+    CHECK_IS_AUTH,
+    CALL_EXER_LIST
 } from '../types'
 
 import { takeLatest, put, call } from "redux-saga/effects"
@@ -35,14 +36,10 @@ const loginUser = function*({payload}) {
 const getAuthUserData = function*() {
 
     try {
-        const data = yield call(fetchGetUserData, {
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem('Authorization')}`
-            }
-        })
+        const data = yield call(fetchGetUserData)
 
         yield put(getUserData(data))
-        yield put(toggleUserIsAuth())
+        yield put(toggleUserIsAuth(true))
     }catch(e) {
         console.log({e}) 
     }
@@ -51,7 +48,7 @@ const getAuthUserData = function*() {
 const logoutUser = function*() {
     try {
         localStorage.removeItem('Authorization')
-        yield put(toggleUserIsAuth())
+        yield put(toggleUserIsAuth(false))
     } catch(e) {
         console.log({e})
     }

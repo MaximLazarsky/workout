@@ -1,6 +1,7 @@
 const Router = require("express")
 const {passport, useAuthMW} = require("../middleware/auth-midleware")
 const Exercises = require('../models/Exercises')
+const User = require("../models/User")
 const WorkOut = require('../models/WorkOut')
 
 const router = new Router()
@@ -11,6 +12,10 @@ router.put('/', async (req, res) => {
 
     try{
 
+        const user = await User.findById(req.body.userId)
+        user.exercises = exercisesList.map(ex => ({id: ex._id}))
+        await user.save()
+
         const exercisesList = await Promise.all(req.body.exercisesList.map(async (exercise) => {
             return  await Exercises.findByIdAndUpdate(
                 {_id: exercise.id},
@@ -18,7 +23,7 @@ router.put('/', async (req, res) => {
                 {new:true}
             )
         }))
-        
+
         return res.json({
             message:"Exsercise was update",
             exercisesList
@@ -37,6 +42,7 @@ router.delete('/:id', async (req, res) => {
         await Exercises.findByIdAndDelete(req.params.id)
 
         const workOutList = await WorkOut.find({exercisesId: req.params.id})
+        
         for (let element of workOutList) {
             element.exercisesId.splice(element.exercisesId.indexOf(req.params.id), 1)
             await element.save()
@@ -57,28 +63,16 @@ router.post('/:userId', async (req, res) => {
 
         const exercise = new Exercises({userId: req.params.userId, exerName: req.body.exerName, mesurType: req.body.mesurType})
         await exercise.save()
+    
+
+        const user = await User.findById(req.params.userId)
+        await user.exercises.push(exercise.id)
+        await user.save()
+
         return res.json({
             message: "Exercise was created",
             exercise
         })
-
-    } catch(e) {
-        console.log (e)
-        res.send({message: "Server error"}) 
-    }
-})
-
-router.get('/:userId', async (req, res) => {
-    try {
-        const exercises = await Exercises.find({userId: req.params.userId})
-
-        if(!exercises) {
-            return res.json({message: "You dont have exercises"})
-        }
-
-        return res.json({
-            exercises
-        }) 
 
     } catch(e) {
         console.log (e)

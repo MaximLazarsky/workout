@@ -15,8 +15,9 @@ export const getLoginAuth = (payload={}) => {
     }
 }
 
-export const toggleUserIsAuth = () => ({
-    type: TOGGLE_USER_IS_AUTH
+export const toggleUserIsAuth = (payload) => ({
+    type: TOGGLE_USER_IS_AUTH,
+    payload
 })
 
 export const getUserData = (payload) => {

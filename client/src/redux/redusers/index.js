@@ -2,13 +2,10 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import {composeWithDevTools}  from "redux-devtools-extension"
 import userReducer from "./userReduser"
-import exerReduser from "./exerReduser"
 import rootSaga from "../sagas/rootSaga"
 
 const rootReduser = combineReducers({
-    user: userReducer,
-    exer: exerReduser,
-    // workout: workoutReduser
+    user: userReducer
 })
 
 const sagaMiddleware = createSagaMiddleware()

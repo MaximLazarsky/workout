@@ -10,7 +10,6 @@ import IsAuthRoutes from './routes/IsAuthRoutes'
 import Verify from "./pages/Verify"
 import { useEffect } from 'react'
 import {checkIsAuth} from "./redux/actions/auth"
-import {callExerList} from "./redux/actions/exer"
 import {userIsAuthSelector} from './redux/selectors'
 
 function App() {
@@ -24,12 +23,6 @@ function App() {
   },[])
 
   const {userId} = useSelector((state)=> state.user.currentUser)
-
-  useEffect(()=>{
-    if(localStorage.getItem('Authorization') && userId) {
-      dispatch(callExerList(userId))
-    }
-  },[])
 
   const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes
 

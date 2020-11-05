@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginPage() {
     const isUserLoading = useSelector(userLoadingSelector)
-    const isUserAuth = useSelector(userIsAuthSelector)
     const classes = useStyles();
 
     const dispatch = useDispatch()

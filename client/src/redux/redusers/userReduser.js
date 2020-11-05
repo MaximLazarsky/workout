@@ -21,7 +21,7 @@ export default function userReduser(state = defaultState, action) {
         case TOGGLE_USER_IS_AUTH:
             return {
                 ...state,
-                isAuth: !state.isAuth
+                isAuth: action.payload
             }
         case GET_USER_DATA:
             return {

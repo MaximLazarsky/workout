@@ -1,19 +1,24 @@
 import {
-    GET_USER_EXERCISES,
-    CALL_EXER_LIST
+    ADD_NEW_EXER,
+    DELETE_EXER,
+    UPDATE_EXERCISES
 } from '../types'
 
-export const getUserExercises = (payload) => {
-    console.log("getExerAction", payload)
+export const addNewExer = (payload={}) => {
     return {
-        type: GET_USER_EXERCISES,
+        type: ADD_NEW_EXER,
         payload
-    }   
+    }
 }
 
-export const callExerList = (payload) => {
+export const deleteExer = (id) => ({
+        type: DELETE_EXER,
+        payload: id
+})
+
+export const updateExercsises = (payload) => {
     return {
-        type: CALL_EXER_LIST,
+        type: UPDATE_EXERCISES,
         payload
     }
 }

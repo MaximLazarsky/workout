@@ -36,11 +36,30 @@ export const fetchRegisterUser = async({email, password}) => {
 
 // FETCHES for EXERCISES
 
-export const fetchGetUserExercises = async(userId) => {
-    const response = await axios.post(`http://localhost:5000/api/exercises/:${userId}`, {
-        headers: {
+export const fetchAddNewExercise = async({userId, mesurType, exerName}) => {
+    const response = await axios.post(`http://localhost:5000/api/exercises/${userId}`, 
+        {userId, mesurType, exerName},
+        {
+            headers: {
             Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+            }
+        })
+}
+
+export const fetchDeleteExer = async(id) => {
+    const response = await axios.delete(`http://localhost:5000/api/exercises/${id}`, {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('Authorization')}`
         }
     })
-    return response.data
+}
+
+export const fetchUpdateUserExer = async(payload) => {
+    const response = await axios.put(`http://localhost:5000/api/exercises/`, 
+    payload,
+    {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+        }
+    })
 }

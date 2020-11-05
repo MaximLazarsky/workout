@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { useDispatch, useSelector } from "react-redux"
-import {addNewExer, getListExers} from '../../actions/exerActions'
+// import {addNewExer, getListExers} from '../../actions/exerActions'
 import { useState } from "react"
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+
+import { addNewExer} from '../../redux/actions/exer'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -80,8 +82,11 @@ export default function NewExercisePage() {
                     className={classes.input} 
                     color="primary"
                     onClick={
-                      ()=>{dispatch(addNewExer(mesurType, exerName, userId))
-                          dispatch(getListExers(userId))}
+                      ()=>{
+                        dispatch(addNewExer({userId, exerName, mesurType}))
+                        // dispatch(addNewExer(mesurType, exerName, userId))
+                        //   dispatch(getListExers(userId))
+                        }
                     }
             >
               Create Exercise

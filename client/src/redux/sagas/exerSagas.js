@@ -1,32 +1,51 @@
 import {
-    CALL_EXER_LIST
+    ADD_NEW_EXER,
+    DELETE_EXER
 } from '../types'
 
 import { takeLatest, put, call } from "redux-saga/effects"
 
-import {
-    fetchGetUserExercises
+import { 
+    fetchAddNewExercise, 
+    fetchDeleteExer, 
+    fetchUpdateUserExer 
 } from '../../services/httpService'
 
-import { getUserExercises, callExerList } from '../actions/exer'
+import { checkIsAuth } from '../actions/auth'
 
-const getUserExercisesList = function*({payload}) {
-    yield put(callExerList(payload))
-    const { userId } = payload
-    console.log("in saga", payload)
+const addUserNewExer = function*({payload}) {
+    const {userId, mesurType, exerName} = payload
     try {
-        const data = yield call(fetchGetUserExercises(userId), {
-            headers: {
-            Authorization: `Bearer ${localStorage.getItem('Authorization')}`
-            }
-        })
+        const data = yield call(fetchAddNewExercise, {userId, mesurType, exerName})
+        yield put(checkIsAuth())
+        console.log("data from saga", data)
+    } catch(e) {
+        console.log({e}) 
+    }
+}
 
-        yield put(getUserExercises(data))
-    }catch(e) {
+const deleteUserExer = function*({payload}) {
+
+    try {
+        const data = yield call(fetchDeleteExer, payload)
+        yield put(checkIsAuth())
+        
+    } catch(e) {
+        console.log({e}) 
+    }
+}
+
+const updateUserExercisesList = function*(payload) {
+
+    try {
+        const data = yield call(fetchUpdateUserExer, payload)
+        
+    } catch(e) {
         console.log({e}) 
     }
 }
 
 export default [
-    takeLatest(CALL_EXER_LIST, getUserExercisesList)
+    takeLatest(ADD_NEW_EXER, addUserNewExer),
+    takeLatest(DELETE_EXER, deleteUserExer)
 ]

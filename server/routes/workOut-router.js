@@ -29,6 +29,10 @@ router.post('/:userId', async (req, res) => {
         dateToday = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
 
         const workOut = new WorkOut({userId: req.params.userId, exercises: req.body.exercises, date: req.body.date || dateToday}) 
+
+        const user = await User.findById(req.params.userId)
+        await user.workOut.push(workOut.id)
+        await user.save()
         await workOut.save()
         return res.json({
             message: "Workout was create",

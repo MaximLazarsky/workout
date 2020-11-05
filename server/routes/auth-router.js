@@ -94,22 +94,4 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/', useAuthMW(), async(req, res) => {
-    try {
-    
-        const user = await User.findById(req.user._id)
-        const userId = user._id
-        const email = user.email
-
-        return res.json({
-            userId,
-            email
-        })
-
-    } catch(e) {
-        console.log (e)
-        res.send({message: "Server error"})
-    }
-})
-
 module.exports = router
