@@ -46,7 +46,7 @@ export default function EditExercisePage() {
 
    function hendlerSetExercisesList(event, index) {
     const newExercisesList = [...exercises];
-    newExercisesList[index].event.target.name = event.target.value
+    newExercisesList[index].[event.target.name] = event.target.value
     setExercisesList(newExercisesList)
 }
 
