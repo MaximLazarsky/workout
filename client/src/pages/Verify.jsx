@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import queryString from 'query-string'
 import { useDispatch } from "react-redux"
-import { verifycation } from "../actions/userActions"
 import { useState } from "react"
 import history from '../history'  
 import {useSelector} from 'react-redux'

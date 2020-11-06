@@ -11,18 +11,17 @@ router.use(useAuthMW())
 router.put('/', async (req, res) => {
 
     try{
-
-        const user = await User.findById(req.body.userId)
-        user.exercises = exercisesList.map(ex => ({id: ex._id}))
-        await user.save()
-
-        const exercisesList = await Promise.all(req.body.exercisesList.map(async (exercise) => {
+        const exercisesList = await Promise.all(req.body.map(async (exercise) => {
             return  await Exercises.findByIdAndUpdate(
-                {_id: exercise.id},
+                {_id: exercise._id},
                 {exerName: exercise.exerName, mesurType: exercise.mesurType},
                 {new:true}
             )
         }))
+
+        const user = await User.findById(req.user._id)
+        user.exercises = exercisesList.map(ex => ({_id: ex._id}))
+        await user.save()
 
         return res.json({
             message:"Exsercise was update",

@@ -62,4 +62,5 @@ export const fetchUpdateUserExer = async(payload) => {
         Authorization: `Bearer ${localStorage.getItem('Authorization')}`
         }
     })
+    return response.data
 }

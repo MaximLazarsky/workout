@@ -12,20 +12,11 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import AddWorkoutContainer from '../../components/add-workout/AddWorkoutContainer'
 
-export default function NewWorkoutPage() {
-
-    const classes = useStyles()
-
-    // const dispatch = useDispatch()
-
-    // const {exercises} = useSelector((state)=> state.user.currentUser)
+export default function NewWorkoutPage({classes, exercises}) {
 
     return(
-        <div className = {classes.main}>
-            <AddWorkoutContainer/>
-            {/* <form className={classes.form} noValidate autoComplete="off"> 
+            <form className={classes.form} noValidate autoComplete="off"> 
             <h3>
                 New workout
             </h3>
@@ -112,7 +103,6 @@ export default function NewWorkoutPage() {
             >
                 Create workout
             </Button>    
-          </form> */}
-        </div>
+          </form>
     )
 }

@@ -1,6 +1,7 @@
 import {
     ADD_NEW_EXER,
-    DELETE_EXER
+    DELETE_EXER,
+    UPDATE_EXERCISES
 } from '../types'
 
 import { takeLatest, put, call } from "redux-saga/effects"
@@ -18,7 +19,6 @@ const addUserNewExer = function*({payload}) {
     try {
         const data = yield call(fetchAddNewExercise, {userId, mesurType, exerName})
         yield put(checkIsAuth())
-        console.log("data from saga", data)
     } catch(e) {
         console.log({e}) 
     }
@@ -35,11 +35,10 @@ const deleteUserExer = function*({payload}) {
     }
 }
 
-const updateUserExercisesList = function*(payload) {
-
+const updateUserExercisesList = function*({payload}) {
     try {
         const data = yield call(fetchUpdateUserExer, payload)
-        
+        yield put(checkIsAuth())
     } catch(e) {
         console.log({e}) 
     }
@@ -47,5 +46,6 @@ const updateUserExercisesList = function*(payload) {
 
 export default [
     takeLatest(ADD_NEW_EXER, addUserNewExer),
-    takeLatest(DELETE_EXER, deleteUserExer)
+    takeLatest(DELETE_EXER, deleteUserExer),
+    takeLatest(UPDATE_EXERCISES, updateUserExercisesList),
 ]

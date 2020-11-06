@@ -1,7 +1,8 @@
 import {
     ADD_NEW_EXER,
     DELETE_EXER,
-    UPDATE_EXERCISES
+    UPDATE_EXERCISES,
+    CHANGE_ORDER_EXERCISES
 } from '../types'
 
 export const addNewExer = (payload={}) => {
@@ -16,9 +17,7 @@ export const deleteExer = (id) => ({
         payload: id
 })
 
-export const updateExercsises = (payload) => {
-    return {
+export const updateExercsises = (payload) => ({
         type: UPDATE_EXERCISES,
         payload
-    }
-}
+})
