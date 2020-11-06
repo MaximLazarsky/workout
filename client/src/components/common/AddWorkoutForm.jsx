@@ -1,8 +1,7 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+
 import history from '../../history'
-import useStyles from './new-workout-styles'
+
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
