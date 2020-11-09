@@ -1,6 +1,7 @@
 const Router = require('express')
 const {passport, useAuthMW} = require('../middleware/auth-midleware')
 const WorkOut = require('../models/WorkOut')
+const User = require('../models/User')
 
 const router = new Router()
 
@@ -30,10 +31,13 @@ router.post('/:userId', async (req, res) => {
 
         const workOut = new WorkOut({userId: req.params.userId, exercises: req.body.exercises, date: req.body.date || dateToday}) 
 
+        await workOut.save()
+
+
         const user = await User.findById(req.params.userId)
         await user.workOut.push(workOut.id)
         await user.save()
-        await workOut.save()
+
         return res.json({
             message: "Workout was create",
             workOut

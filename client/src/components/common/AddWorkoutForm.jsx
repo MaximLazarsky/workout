@@ -1,8 +1,5 @@
 import React from 'react'
-
 import history from '../../history'
-
-
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -12,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-export default function NewWorkoutPage({classes, exercises}) {
+export default function NewWorkoutPage({classes, onClickChangeOrder, repeats, measurment, onClickCreateWorkout, hendlerSetNewExerList, onClickDeleteExerFromList, newExerList}) {
 
     return(
             <form className={classes.form} noValidate autoComplete="off"> 
@@ -33,8 +30,8 @@ export default function NewWorkoutPage({classes, exercises}) {
                 Add exercise
             </Button>    
 
-            {exercises && exercises.map((props, index)=>(
-                <div className={classes.exerItem} key={props._id}> 
+            {newExerList && newExerList.map((props, index)=>(
+                <div className={classes.exerItem} key={props.exerciseId._id}> 
                     <div>
                         <InputLabel 
                             id="demo-simple-select-label" className={classes.textField}>
@@ -44,12 +41,12 @@ export default function NewWorkoutPage({classes, exercises}) {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             className={classes.select}
-                            defaultValue={props.exerName}
-                            onChange={(event)=> {}}
+                            defaultValue={props.exerciseId.exerName}
+                            // onChange={(event)=> {}}
                         >
 
-                        {exercises && exercises.map((props, index)=>(
-                            <MenuItem key={index} value={props.exerName}>{props.exerName}</MenuItem>
+                        {newExerList && newExerList.map((props, index)=>(
+                            <MenuItem key={index} value={props.exerciseId.exerName}>{props.exerciseId.exerName}</MenuItem>
                         ))}
                         </Select>
                     </div>
@@ -57,32 +54,36 @@ export default function NewWorkoutPage({classes, exercises}) {
                         id="standard-basic"
                         className={classes.textField}  
                         label="Repeats" 
-                        value = ""
-                        // onChange={(event) =>{}}
+                        defaultValue = {repeats}
+                        name="repeats"
+                        onChange={(event) => hendlerSetNewExerList(event, index)}
                     />
 
                     <TextField 
                         id="standard-basic"
                         className={classes.textField}  
                         label="Measurment" 
-                        value = ""
-                        // onChange={(event) =>{}}
+                        defaultValue = {measurment}
+                        name="measurment"
+                        onChange={(event) => hendlerSetNewExerList(event, index)}
                     />
 
-                    <p style={{width: "150px", marginLeft: "20px", fontFamily: "Roboto"}}>{props.mesurType}</p>
+                    {/* <p style={{width: "150px", marginLeft: "20px", fontFamily: "Roboto"}}>
+                        {exercises[exercises.indexOf(props)].mesurType}
+                    </p> */}
                         
                     <Button
                         variant="contained"
                         className={`${classes.button} ${classes.buttonOrder}`}
                         startIcon={<ArrowDownwardIcon />}
-                        // onClick = {()=>{}}
+                        onClick = {()=>onClickChangeOrder(index, true)}
                     />
 
                     <Button
                         variant="contained"
                         className={`${classes.button} ${classes.buttonOrder}`}
                         startIcon={<ArrowUpwardIcon />}
-                        // onClick = {()=>{}}
+                        onClick = {()=>onClickChangeOrder(index, false)}
                     />
 
                     <Button
@@ -90,7 +91,7 @@ export default function NewWorkoutPage({classes, exercises}) {
                         color="secondary"
                         startIcon={<DeleteIcon />}
                         className={classes.button}
-                        // onClick = {()=>{}}
+                        onClick = {()=>onClickDeleteExerFromList(index)}
                     />
                 </div>    
             ))}
@@ -98,7 +99,7 @@ export default function NewWorkoutPage({classes, exercises}) {
                 variant="contained"
                 color="secondary"
                 style={{marginRight: "15px", width: "200px"}}
-                // onClick = {()=>{}}
+                onClick = {()=> onClickCreateWorkout()}
             >
                 Create workout
             </Button>    

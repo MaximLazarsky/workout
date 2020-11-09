@@ -4,8 +4,7 @@ import {
     LOGOUT, 
     VERIFY, 
     REGISTER_USER, 
-    CHECK_IS_AUTH,
-    CALL_EXER_LIST
+    CHECK_IS_AUTH
 } from '../types'
 
 import { takeLatest, put, call } from "redux-saga/effects"
@@ -60,7 +59,6 @@ const verifyUser = function*({payload}) {
     
     try {
         const data = yield call(fetchVerifyUser, {email, verificationCode})
-        console.log({data})
         localStorage.setItem('Authorization', data.token)  
         yield put({type: TOGGLE_USER_LOADING})
         yield put({type: CHECK_IS_AUTH})
@@ -74,7 +72,7 @@ const registrationUser = function*({payload}) {
     const {email, password} = payload
 
     try {
-        const data = yield call(fetchRegisterUser, {email, password})
+        yield call(fetchRegisterUser, {email, password})
     } catch(e) {
         console.log({e}) 
     }

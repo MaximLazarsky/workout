@@ -18,7 +18,7 @@ router.get('/', useAuthMW(), async(req, res) => {
             userId: user._id,
             email: user.email,
             exercises: user.exercises,
-            workOut: user.workOut
+            workout: user.workOut
         }) 
 
     } catch(e) {

@@ -21,7 +21,7 @@ export default function EditExercisesConteiner() {
     const [exercisesList, setExercisesList] = useState(exercises)   
 
    function hendlerSetExercisesList(event, index) {
-    const newExercisesList = [...exercises];
+    const newExercisesList = [...exercises]
     newExercisesList[index][event.target.name] = event.target.value
     setExercisesList(newExercisesList)
 }

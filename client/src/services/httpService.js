@@ -37,7 +37,7 @@ export const fetchRegisterUser = async({email, password}) => {
 // FETCHES for EXERCISES
 
 export const fetchAddNewExercise = async({userId, mesurType, exerName}) => {
-    const response = await axios.post(`http://localhost:5000/api/exercises/${userId}`, 
+    await axios.post(`http://localhost:5000/api/exercises/${userId}`, 
         {userId, mesurType, exerName},
         {
             headers: {
@@ -47,7 +47,7 @@ export const fetchAddNewExercise = async({userId, mesurType, exerName}) => {
 }
 
 export const fetchDeleteExer = async(id) => {
-    const response = await axios.delete(`http://localhost:5000/api/exercises/${id}`, {
+    await axios.delete(`http://localhost:5000/api/exercises/${id}`, {
         headers: {
         Authorization: `Bearer ${localStorage.getItem('Authorization')}`
         }
@@ -56,6 +56,37 @@ export const fetchDeleteExer = async(id) => {
 
 export const fetchUpdateUserExer = async(payload) => {
     const response = await axios.put(`http://localhost:5000/api/exercises/`, 
+    payload,
+    {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+        }
+    })
+    return response.data
+}
+
+// FETCH for WORKOUTS
+
+export const fetchAddNewWorkout = async(payload) => {
+    await axios.post(`http://localhost:5000/api/workout/${payload.userId}`, 
+        payload,
+        {
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+            }
+        })
+}
+
+export const fetchDeleteWorkout = async(id) => {
+    await axios.delete(`http://localhost:5000/api/workout/${id}`, {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('Authorization')}`
+        }
+    })
+}
+
+export const fetchUpdateUserWorkout = async(payload) => {
+    const response = await axios.put(`http://localhost:5000/api/workout/`, 
     payload,
     {
         headers: {

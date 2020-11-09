@@ -1,8 +1,7 @@
 import {
     ADD_NEW_EXER,
     DELETE_EXER,
-    UPDATE_EXERCISES,
-    CHANGE_ORDER_EXERCISES
+    UPDATE_EXERCISES
 } from '../types'
 
 export const addNewExer = (payload={}) => {

@@ -37,16 +37,21 @@ router.put('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
 
     try{
-    
+        
         await Exercises.findByIdAndDelete(req.params.id)
 
-        const workOutList = await WorkOut.find({exercisesId: req.params.id})
-        
-        for (let element of workOutList) {
-            element.exercisesId.splice(element.exercisesId.indexOf(req.params.id), 1)
-            await element.save()
+        const workOutList = await WorkOut.find({userId: req.user._id})
+
+        workOutList.map(workout => 
+        workout.exercises = workout.exercises.filter(ex => ex.exerciseId.toString() !== req.params.id))
+
+        for await(let workout of workOutList) {
+            await workout.save()
         }
         
+        const user = await User.findById(req.user._id)
+        await user.exercises.splice(user.exercises.indexOf(req.params.id), 1)
+        await user.save()
         
 
         return res.json({message:"Exersise was deleted"})

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import {useSelector} from 'react-redux'
 import {userLoadingSelector} from '../../redux/selectors'
 import { makeStyles } from '@material-ui/core/styles'

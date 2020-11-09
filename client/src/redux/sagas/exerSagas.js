@@ -17,7 +17,7 @@ import { checkIsAuth } from '../actions/auth'
 const addUserNewExer = function*({payload}) {
     const {userId, mesurType, exerName} = payload
     try {
-        const data = yield call(fetchAddNewExercise, {userId, mesurType, exerName})
+        yield call(fetchAddNewExercise, {userId, mesurType, exerName})
         yield put(checkIsAuth())
     } catch(e) {
         console.log({e}) 
@@ -27,7 +27,7 @@ const addUserNewExer = function*({payload}) {
 const deleteUserExer = function*({payload}) {
 
     try {
-        const data = yield call(fetchDeleteExer, payload)
+        yield call(fetchDeleteExer, payload)
         yield put(checkIsAuth())
         
     } catch(e) {
@@ -37,7 +37,7 @@ const deleteUserExer = function*({payload}) {
 
 const updateUserExercisesList = function*({payload}) {
     try {
-        const data = yield call(fetchUpdateUserExer, payload)
+        yield call(fetchUpdateUserExer, payload)
         yield put(checkIsAuth())
     } catch(e) {
         console.log({e}) 
