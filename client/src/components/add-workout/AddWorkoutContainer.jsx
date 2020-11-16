@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useStyles from './new-workout-styles'
 import AddWorkoutForm from '../common/AddWorkoutForm'
@@ -9,62 +9,66 @@ export default function AddWorkoutContainer() {
 
     const classes = useStyles()
 
-    const dispatch = useDispatch()
-
     const {exercises} = useSelector((state)=> state.user.currentUser)
 
-    const {userId} = useSelector((state) => state.user.currentUser)
+    const defaultExerList = exercises && [exercises[0]]
 
-    const exercisesList = exercises && exercises.map((element) => {
-        const exer = {
-            exerciseId: element,
+    const [localExercises, setlocalExercises] = useState(defaultExerList)
+
+    console.log("local exer from container", localExercises)
+
+    const defaultWorkout = localExercises && localExercises.map(element => {
+        return {
+            exerciseId: element._id,
             repeats: "0",
-            measurment: "0"
+            measurment: "0",
         }
-        return exer
     })
 
-    const [newExerList, setNewExerlist] = useState(exercisesList)
+    const [workout, setWorkout] = useState(defaultWorkout)
 
-    function hendlerSetNewExerList(event, index) {
-        const exerList = [... newExerList]
-        exerList[index][event.target.name] = event.target.value
-        setNewExerlist(exerList)
+    console.log("workout", workout)
+
+    function onClickAddExer() {
+        const exerList = [...localExercises]
+        exerList.push(exercises[0])
+        setlocalExercises(exerList)
+        const newWorkout = exerList.map(element => {
+            return {
+                exerciseId: element._id,
+                repeats: "0",
+                measurment: "0",
+            }
+        })
+        setWorkout(newWorkout)
     }
 
-    const workout = {
-        userId: userId,
-        exercises: newExerList || exercisesList
+    function onChangeExerName(index, event) {
+        const exerList = [...localExercises]
+        exerList[index] = event.target.value
+        setlocalExercises(exerList)
     }
-
-    console.log("From Container", newExerList)
-
-    function onClickCreateWorkout() {
-        dispatch(addNewWorkout(workout))
-    }
-
 
     function onClickDeleteExerFromList(index) {
-        const exerList = [... newExerList]
+        const exerList = [... localExercises]
         exerList.splice(index, 1)
-        // console.log(exerList[index])
-        setNewExerlist(exerList) 
+        setlocalExercises(exerList) 
     }
 
     function onClickChangeOrder(index, order) {
-        const exerList = [... newExerList]
+        const exerList = [... localExercises]
         changeOrder(exerList, index, order)
-        setNewExerlist(exerList) 
+        setlocalExercises(exerList) 
     }
 
     return <AddWorkoutForm
         classes={classes}
+        onClickAddExer={onClickAddExer}
         exercises={exercises}
-        workout={workout}
-        onClickCreateWorkout={onClickCreateWorkout}
-        hendlerSetNewExerList={hendlerSetNewExerList}
+        localExercises={localExercises}
+        setlocalExercises={setlocalExercises}
+        onChangeExerName = {onChangeExerName}
         onClickDeleteExerFromList={onClickDeleteExerFromList}
-        newExerList={newExerList}
         onClickChangeOrder={onClickChangeOrder}
     />
 }
