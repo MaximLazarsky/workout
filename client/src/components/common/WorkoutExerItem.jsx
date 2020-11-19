@@ -14,8 +14,9 @@ export default function WorkoutExerItem({
     exercises, 
     index, 
     onChangeExerName, 
-    onClickDeleteExerFromList, 
-    onClickChangeOrder
+    onClickDeleteExer, 
+    onClickChangeOrder,
+    onChangeMeasurmentOrRepeats
     }) {
     
         const classes = useStyles()
@@ -31,14 +32,15 @@ export default function WorkoutExerItem({
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             className={classes.select}
-                            defaultValue={exercise}
+                            value={exercise.exerciseId}
                             onChange={(event)=> onChangeExerName(index, event)}
                         >
 
-                        {exercises.map((props, index)=>(
+                        {exercises && exercises.map((props, index)=>(
                             <MenuItem 
                                 key={index}
                                 value={props}
+                                selected={props._id === exercise.exerciseId._id}
                              >
                                 {props.exerName}
                             </MenuItem>
@@ -49,22 +51,22 @@ export default function WorkoutExerItem({
                         id="standard-basic"
                         className={classes.textField}  
                         label="Repeats" 
-                        defaultValue = "0"
+                        value = {exercise.repeats} 
                         name="repeats"
-                        onChange={(event) => console.log("TODO")}
+                        onChange={(event) => onChangeMeasurmentOrRepeats(event, index)}
                     />
 
                     <TextField 
                         id="standard-basic"
                         className={classes.textField}  
                         label="Measurment" 
-                        defaultValue = "0"
+                        value = {exercise.measurment}
                         name="measurment"
-                        onChange={(event) => console.log("TODO")}
+                        onChange={(event) => onChangeMeasurmentOrRepeats(event, index)}
                     />
 
                     <p style={{width: "150px", marginLeft: "20px", fontFamily: "Roboto"}}>
-                        {exercise.mesurType}
+                        {exercise.exerciseId.mesurType}
                     </p>
                         
                     <Button
@@ -86,7 +88,7 @@ export default function WorkoutExerItem({
                         color="secondary"
                         startIcon={<DeleteIcon />}
                         className={classes.button}
-                        onClick = {()=>onClickDeleteExerFromList(index)}
+                        onClick = {()=>onClickDeleteExer(index)}
                     />
                 </div>    
     )

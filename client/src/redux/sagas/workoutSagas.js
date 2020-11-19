@@ -13,6 +13,7 @@ import {
 
 
 const addUserNewWorkout = function*({payload}) {
+    console.log("FROM SAGA", payload)
     try {
         yield call(fetchAddNewWorkout, payload)
         yield put(checkIsAuth())

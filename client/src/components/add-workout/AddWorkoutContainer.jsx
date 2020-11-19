@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useStyles from './new-workout-styles'
 import AddWorkoutForm from '../common/AddWorkoutForm'
@@ -7,68 +7,70 @@ import changeOrder from '../../services/changeOrderServices'
 
 export default function AddWorkoutContainer() {
 
+    const dispatch = useDispatch()
+
     const classes = useStyles()
 
     const {exercises} = useSelector((state)=> state.user.currentUser)
 
-    const defaultExerList = exercises && [exercises[0]]
+    const [workout, setWorkout] = useState([{
+        exerciseId: exercises && exercises[0],
+        repeats: "0",
+        measurment: "0",
+    }])
 
-    const [localExercises, setlocalExercises] = useState(defaultExerList)
+    console.log("Workout", workout)
 
-    console.log("local exer from container", localExercises)
-
-    const defaultWorkout = localExercises && localExercises.map(element => {
-        return {
-            exerciseId: element._id,
-            repeats: "0",
-            measurment: "0",
-        }
-    })
-
-    const [workout, setWorkout] = useState(defaultWorkout)
-
-    console.log("workout", workout)
+    function onChangeMeasurmentOrRepeats(event, index) {
+        const newWorkout = [...workout]
+        newWorkout[index][event.target.name] = event.target.value
+        setWorkout(newWorkout)
+    }
 
     function onClickAddExer() {
-        const exerList = [...localExercises]
-        exerList.push(exercises[0])
-        setlocalExercises(exerList)
-        const newWorkout = exerList.map(element => {
-            return {
-                exerciseId: element._id,
-                repeats: "0",
-                measurment: "0",
+        setWorkout([...workout, {
+            exerciseId: exercises[0],
+            repeats: "0",
+            measurment: "0",
+        }]) 
+    }
+
+    function onChangeExerName(index, event) {
+
+        const newWorkout = [...workout]
+        exercises.map(ex => {
+            if(ex._id === event.target.value._id){
+                newWorkout[index].exerciseId = ex;
             }
         })
         setWorkout(newWorkout)
     }
 
-    function onChangeExerName(index, event) {
-        const exerList = [...localExercises]
-        exerList[index] = event.target.value
-        setlocalExercises(exerList)
-    }
-
-    function onClickDeleteExerFromList(index) {
-        const exerList = [... localExercises]
-        exerList.splice(index, 1)
-        setlocalExercises(exerList) 
+    function onClickDeleteExer(index) {
+        const newWorkout = [...workout]
+        newWorkout.splice(index, 1)
+        setWorkout(newWorkout)
     }
 
     function onClickChangeOrder(index, order) {
-        const exerList = [... localExercises]
-        changeOrder(exerList, index, order)
-        setlocalExercises(exerList) 
+        const newWorkout = [...workout]
+        changeOrder(newWorkout, index, order)
+        setWorkout(newWorkout) 
+    }
+
+    function onClickAddNewWorkout() {
+        dispatch(addNewWorkout(workout))
     }
 
     return <AddWorkoutForm
         classes={classes}
         onClickAddExer={onClickAddExer}
         exercises={exercises}
-        localExercises={localExercises}
-        setlocalExercises={setlocalExercises}
         onChangeExerName = {onChangeExerName}
-        onClickDeleteExerFromList={onClickDeleteExerFromList}
+        onClickDeleteExer={onClickDeleteExer}
         onClickChangeOrder={onClickChangeOrder}
+        workout={workout}
+        onChangeMeasurmentOrRepeats={onChangeMeasurmentOrRepeats}
+        onClickAddNewWorkout={onClickAddNewWorkout}
     />
 }

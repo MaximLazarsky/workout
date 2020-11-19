@@ -68,7 +68,7 @@ export const fetchUpdateUserExer = async(payload) => {
 // FETCH for WORKOUTS
 
 export const fetchAddNewWorkout = async(payload) => {
-    await axios.post(`http://localhost:5000/api/workout/${payload.userId}`, 
+    await axios.post(`http://localhost:5000/api/workout/`, 
         payload,
         {
             headers: {

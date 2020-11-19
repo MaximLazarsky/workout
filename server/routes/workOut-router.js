@@ -24,17 +24,17 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.post('/:userId', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         date = new Date(Date.now())
         dateToday = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
 
-        const workOut = new WorkOut({userId: req.params.userId, exercises: req.body.exercises, date: req.body.date || dateToday}) 
+        const workOut = new WorkOut({userId: req.user, exercises: req.body, date: req.body.date || dateToday}) 
 
         await workOut.save()
 
 
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user)
         await user.workOut.push(workOut.id)
         await user.save()
 

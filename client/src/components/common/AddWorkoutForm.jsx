@@ -1,17 +1,17 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
-import { useState, useEffect } from 'react';
-// import WorkoutExerItemContainer from '../workout-exer-item/WorkoutExerItemContainer'
 import WorkoutExerItem from './WorkoutExerItem'
 
 export default function AddWorkoutForm({ 
     classes, 
     exercises, 
     onClickAddExer, 
-    localExercises, 
+    onClickAddNewWorkout, 
     onChangeExerName, 
-    onClickDeleteExerFromList,
+    onClickDeleteExer,
     onClickChangeOrder,
+    workout,
+    onChangeMeasurmentOrRepeats
     }) {
 
     return(
@@ -32,21 +32,22 @@ export default function AddWorkoutForm({
             >
                 Add exercise
             </Button> 
-            {localExercises && localExercises.map((element, index) => 
+            {workout && workout.map((element, index) => 
              <WorkoutExerItem 
                 key={index} 
                 exercise={element} 
                 exercises={exercises}
                 index={index}
                 onChangeExerName={onChangeExerName}
-                onClickDeleteExerFromList={onClickDeleteExerFromList}
+                onClickDeleteExer={onClickDeleteExer}
                 onClickChangeOrder={onClickChangeOrder}
+                onChangeMeasurmentOrRepeats={onChangeMeasurmentOrRepeats}
                 />)}
             <Button
                 variant="contained"
                 color="secondary"
                 style={{marginRight: "15px", width: "200px"}}
-                // onClick = {()=> onClickCreateWorkout()}
+                onClick = {()=> onClickAddNewWorkout()}
             >
                 Create workout
             </Button>    
