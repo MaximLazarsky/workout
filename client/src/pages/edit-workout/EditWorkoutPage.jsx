@@ -1,4 +1,5 @@
 import React from 'react'
+import EditWorkoutContainer from '../../components/editWorkout/EditWorkoutContainer'
 
 export default function editWorkoutPage() {
     return(
@@ -11,7 +12,7 @@ export default function editWorkoutPage() {
             height: "100vh"
         }}
         >
-            <h1>editWorkoutPage</h1>
+            <EditWorkoutContainer/>
         </div>
     )
 }

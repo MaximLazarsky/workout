@@ -12,7 +12,11 @@ const router = new Router()
 router.get('/', useAuthMW(), async(req, res) => {
     try {
     
-        const user = await User.findById(req.user._id).populate('exercises')
+        const user = await User.findById(req.user._id).populate('exercises').populate(
+            {path: 'workOut', model: 'WorkOut',
+      populate: { path: 'exercises.exerciseId', model: 'Exercises' }
+    }
+        )
 
         return res.json({
             userId: user._id,

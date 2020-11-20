@@ -20,8 +20,9 @@ export default function WorkoutExerItem({
     }) {
     
         const classes = useStyles()
+        // console.log(exercise.exerciseId)
 
-    return(
+    if (exercise.exerciseId) return(
         <div className={classes.exerItem}> 
                     <div>
                         <InputLabel 
@@ -64,11 +65,9 @@ export default function WorkoutExerItem({
                         name="measurment"
                         onChange={(event) => onChangeMeasurmentOrRepeats(event, index)}
                     />
-
                     <p style={{width: "150px", marginLeft: "20px", fontFamily: "Roboto"}}>
                         {exercise.exerciseId.mesurType}
                     </p>
-                        
                     <Button
                         variant="contained"
                         className={`${classes.button} ${classes.buttonOrder}`}
@@ -91,5 +90,10 @@ export default function WorkoutExerItem({
                         onClick = {()=>onClickDeleteExer(index)}
                     />
                 </div>    
+    )
+    return(
+        <h1>
+            You haven't exercises, please create exercise.
+        </h1>
     )
 }
