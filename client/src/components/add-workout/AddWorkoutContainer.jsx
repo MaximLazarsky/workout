@@ -45,7 +45,7 @@ export default function AddWorkoutContainer() {
 
         const newWorkout = [...workout]
         exercises.map(ex => {
-            if(ex._id === event.target.value._id){
+            if(ex._id === event.target.value){
                 newWorkout[index].exerciseId = ex;
             }
         })
@@ -68,7 +68,7 @@ export default function AddWorkoutContainer() {
         dispatch(addNewWorkout(workout))
     }
 
-    return <AddWorkoutForm
+    if (exercises) return <AddWorkoutForm
         classes={classes}
         onClickAddExer={onClickAddExer}
         exercises={exercises}
@@ -79,4 +79,6 @@ export default function AddWorkoutContainer() {
         onChangeMeasurmentOrRepeats={onChangeMeasurmentOrRepeats}
         onClickAddNewWorkout={onClickAddNewWorkout}
     />
+    return <h1> You haven't exercises, please create exercise.</h1>
+    
 }

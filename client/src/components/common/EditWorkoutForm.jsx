@@ -6,7 +6,7 @@ export default function EditWorkoutForm({
     classes, 
     exercises, 
     onClickAddExer, 
-    onClickAddNewWorkout, 
+    onClickUpdateWorkout, 
     onChangeExerName, 
     onClickDeleteExer,
     onClickChangeOrder,
@@ -47,9 +47,9 @@ export default function EditWorkoutForm({
                 variant="contained"
                 color="secondary"
                 style={{marginRight: "15px", width: "200px"}}
-                onClick = {()=> onClickAddNewWorkout()}
+                onClick = {()=> onClickUpdateWorkout()}
             >
-                Create workout
+                Update workout
             </Button>    
           </form>
     )

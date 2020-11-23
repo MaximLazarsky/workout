@@ -10,9 +10,7 @@ router.use(useAuthMW())
 router.put('/:id', async (req, res) => {
 
     try{
-        const {exercisesId} = req.body
-        let workout = await WorkOut.findByIdAndUpdate({_id: req.params.id}, {exercisesId}, {new: true})
-        
+        let workout = await WorkOut.findByIdAndUpdate({_id: req.params.id}, {exercises: req.body.workout}, {new: true})
         return res.json({
             message:"Workout was update",
             workout
@@ -27,7 +25,7 @@ router.put('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         date = new Date(Date.now())
-        dateToday = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
+        dateToday = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
 
         const workOut = new WorkOut({userId: req.user, exercises: req.body, date: req.body.date || dateToday}) 
 

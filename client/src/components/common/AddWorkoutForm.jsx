@@ -15,7 +15,7 @@ export default function AddWorkoutForm({
     }) {
 
     return(
-            <form className={classes.form} noValidate autoComplete="off"> 
+        <form className={classes.form} noValidate autoComplete="off"> 
             <h3>
                 New workout
             </h3>
@@ -51,6 +51,6 @@ export default function AddWorkoutForm({
             >
                 Create workout
             </Button>    
-          </form>
+        </form>
     )
 }

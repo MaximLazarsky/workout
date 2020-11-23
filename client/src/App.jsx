@@ -11,6 +11,7 @@ import Verify from "./pages/Verify"
 import { useEffect } from 'react'
 import {checkIsAuth} from "./redux/actions/auth"
 import {userIsAuthSelector} from './redux/selectors'
+import './pages/dashboard/style.css'
 
 function App() {
 
@@ -21,8 +22,6 @@ function App() {
     if(localStorage.getItem('Authorization'))
         dispatch(checkIsAuth())
   },[])
-
-  const {userId} = useSelector((state)=> state.user.currentUser)
 
   const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes
 

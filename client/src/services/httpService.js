@@ -86,7 +86,7 @@ export const fetchDeleteWorkout = async(id) => {
 }
 
 export const fetchUpdateUserWorkout = async(payload) => {
-    const response = await axios.put(`http://localhost:5000/api/workout/`, 
+    const response = await axios.put(`http://localhost:5000/api/workout/${payload.id}`, 
     payload,
     {
         headers: {

@@ -2,13 +2,15 @@ import {
         GET_USER_DATA, 
         TOGGLE_USER_LOADING, 
         TOGGLE_USER_IS_AUTH, 
-        LOGOUT
+        LOGOUT,
+        SET_DATE
     } from '../types'
 
 const defaultState = {
     currentUser: {},
     isAuth: false,
-    isLoading: false
+    isLoading: false,
+    date: new Date()
 }
 
 export default function userReduser(state = defaultState, action) {
@@ -32,6 +34,11 @@ export default function userReduser(state = defaultState, action) {
             return {
                 ...state,
                 currentUser: {}
+            }
+        case SET_DATE:
+            return {
+                ...state,
+                date: action.payload
             }
         default:
             return state

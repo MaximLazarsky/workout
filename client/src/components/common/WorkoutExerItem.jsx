@@ -20,9 +20,8 @@ export default function WorkoutExerItem({
     }) {
     
         const classes = useStyles()
-        // console.log(exercise.exerciseId)
 
-    if (exercise.exerciseId) return(
+     return(
         <div className={classes.exerItem}> 
                     <div>
                         <InputLabel 
@@ -33,15 +32,14 @@ export default function WorkoutExerItem({
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             className={classes.select}
-                            value={exercise.exerciseId}
+                            value={exercise.exerciseId._id}
                             onChange={(event)=> onChangeExerName(index, event)}
                         >
 
                         {exercises && exercises.map((props, index)=>(
                             <MenuItem 
                                 key={index}
-                                value={props}
-                                selected={props._id === exercise.exerciseId._id}
+                                value={props._id}
                              >
                                 {props.exerName}
                             </MenuItem>
@@ -90,10 +88,5 @@ export default function WorkoutExerItem({
                         onClick = {()=>onClickDeleteExer(index)}
                     />
                 </div>    
-    )
-    return(
-        <h1>
-            You haven't exercises, please create exercise.
-        </h1>
     )
 }

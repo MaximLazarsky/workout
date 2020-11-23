@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useStyles from '../add-workout/new-workout-styles'
 import EditWorkoutForm from '../common/EditWorkoutForm'
-// import {addNewWorkout} from '../../redux/actions/workout'
+import {updateWorkout} from '../../redux/actions/workout'
 import changeOrder from '../../services/changeOrderServices'
 
 export default function EditWorkoutContainer() {
@@ -15,8 +15,11 @@ export default function EditWorkoutContainer() {
 
     const existWorkout = useSelector((state)=>state.user.currentUser.workout)
 
-    const [workout, setWorkout] = useState(existWorkout[0].exercises)
-    console.log(workout[0].exerciseId.exerName)
+    const [workout, setWorkout] = useState(existWorkout && existWorkout[0].exercises)
+
+    useEffect(()=>{
+        setWorkout(existWorkout && existWorkout[0].exercises)
+    },[existWorkout])
 
     function onChangeMeasurmentOrRepeats(event, index) {
         const newWorkout = [...workout]
@@ -35,8 +38,9 @@ export default function EditWorkoutContainer() {
     function onChangeExerName(index, event) {
 
         const newWorkout = [...workout]
+
         exercises.map(ex => {
-            if(ex._id === event.target.value._id){
+            if(ex._id=== event.target.value){
                 newWorkout[index].exerciseId = ex;
             }
         })
@@ -55,11 +59,11 @@ export default function EditWorkoutContainer() {
         setWorkout(newWorkout) 
     }
 
-    // function onClickAddNewWorkout() {
-    //     dispatch(addNewWorkout(workout))
-    // }
-
-    return <EditWorkoutForm
+    function onClickUpdateWorkout() {
+        dispatch(updateWorkout({id: existWorkout[0]._id, workout: workout}))
+    }
+    
+    if(workout) return <EditWorkoutForm
         classes={classes}
         onClickAddExer={onClickAddExer}
         exercises={exercises}
@@ -68,6 +72,8 @@ export default function EditWorkoutContainer() {
         onClickChangeOrder={onClickChangeOrder}
         workout={workout}
         onChangeMeasurmentOrRepeats={onChangeMeasurmentOrRepeats}
-        // onClickAddNewWorkout={onClickAddNewWorkout}
+        onClickUpdateWorkout={onClickUpdateWorkout}
     />
+
+    return <h1> You haven't workout, please create workout.</h1>
 }
