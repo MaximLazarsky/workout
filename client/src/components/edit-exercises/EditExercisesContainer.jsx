@@ -40,7 +40,7 @@ export default function EditExercisesConteiner() {
         dispatch(updateExercsises(correctExerList()))   
     }
 
-    return <EditExercisesForm 
+    if (exercises && exercises.length) return <EditExercisesForm 
         exerName={exerName}
         mesurType={mesurType}
         exercises={exercises}
@@ -50,4 +50,5 @@ export default function EditExercisesConteiner() {
         onClickUpdate={onClickUpdate}
         classes={classes}                    
     />
+    return <h1> You haven't exercises, please create exercise.</h1>
 }

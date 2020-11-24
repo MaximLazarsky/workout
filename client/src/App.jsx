@@ -4,7 +4,6 @@ import LeftSideBar from './components/LeftSideBar'
 import {Router, Route, Switch} from 'react-router-dom'
 import history from './history'
 import {useDispatch, useSelector} from 'react-redux'
-
 import AuthRoutes from './routes/AuthRoutes'
 import IsAuthRoutes from './routes/IsAuthRoutes'
 import Verify from "./pages/Verify"
@@ -19,8 +18,10 @@ function App() {
 
   const isUserAuth = useSelector(userIsAuthSelector)
   useEffect(()=>{
-    if(localStorage.getItem('Authorization'))
-        dispatch(checkIsAuth())
+    if(localStorage.getItem('Authorization')){
+      dispatch(checkIsAuth())
+      history.push('/dashboard')
+    }    
   },[])
 
   const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes

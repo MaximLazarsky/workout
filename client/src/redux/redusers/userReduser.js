@@ -3,18 +3,26 @@ import {
         TOGGLE_USER_LOADING, 
         TOGGLE_USER_IS_AUTH, 
         LOGOUT,
-        SET_DATE
+        SET_DATE,
+        CHECK_INPUT_REGISTER
     } from '../types'
+import {formatDate} from '../../services/dateFormat'
 
 const defaultState = {
     currentUser: {},
     isAuth: false,
     isLoading: false,
-    date: new Date()
+    isInputRegister: false,
+    date: formatDate(new Date())
 }
 
 export default function userReduser(state = defaultState, action) {
     switch(action.type) {
+        case CHECK_INPUT_REGISTER:
+            return {
+                ...state,
+                isInputRegister: !state.isInputRegister
+            }
         case TOGGLE_USER_LOADING: 
             return {
                 ...state,

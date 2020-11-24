@@ -2,7 +2,7 @@ import React from "react"
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
-export default function LoginPage({classes, email, setEmail, password, setPassword, onLoginClick}) {
+export default function LoginPage({classes, email, setEmail, password, setPassword, onLoginClick, isAuth}) {
 
     return (
           <form className={classes.form} noValidate autoComplete="off"> 

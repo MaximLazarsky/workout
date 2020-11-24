@@ -21,6 +21,8 @@ export default function NewExercisePage() {
 
     const onClickAddExer = () => {
       dispatch(addNewExer({userId, exerName, mesurType}))
+      setMesurType('')
+      setExerName('')
     }
 
     return <AddExerciseForm

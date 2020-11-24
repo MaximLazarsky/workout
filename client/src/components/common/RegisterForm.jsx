@@ -1,10 +1,21 @@
 import React from "react"
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-// import { registerUser } from "../../redux/actions/auth"
 
-export default function RegisterForm({classes, email, setEmail, password, setPassword, repeatPassword, setRepeatPassword, onRegisterClick}) {
-  
+export default function RegisterForm({
+    classes, 
+    email, 
+    setEmail, 
+    password, 
+    setPassword, 
+    repeatPassword, 
+    setRepeatPassword, 
+    onRegisterClick,
+    InfoMessage,
+    isInputRegister,
+    onRegisterBlur
+  }) {
+
     return (
           <form className={classes.form} noValidate autoComplete="off"> 
             <div>
@@ -42,9 +53,12 @@ export default function RegisterForm({classes, email, setEmail, password, setPas
               variant="contained" 
               className={classes.input} 
               color="primary" 
-              onClick={() => onRegisterClick()}>
+              onClick={() => onRegisterClick()}
+              onBlur={() => onRegisterBlur()}
+              >
               Sign Up
             </Button>
+            {!!isInputRegister ? InfoMessage(): <></>}
           </form>
       )
 }

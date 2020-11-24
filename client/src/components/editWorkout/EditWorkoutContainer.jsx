@@ -13,13 +13,19 @@ export default function EditWorkoutContainer() {
 
     const {exercises} = useSelector((state)=>state.user.currentUser)
 
-    const existWorkout = useSelector((state)=>state.user.currentUser.workout)
+    const workoutList = useSelector((state)=>state.user.currentUser.workout)
 
-    const [workout, setWorkout] = useState(existWorkout && existWorkout[0].exercises)
+    const {date} = useSelector((state)=>state.user)
+
+    const targetWorkout = workoutList && workoutList.find((el) => el.date === date)
+
+    const [workout, setWorkout] = useState(targetWorkout && targetWorkout.exercises)
+
+    console.log(targetWorkout, workoutList)
 
     useEffect(()=>{
-        setWorkout(existWorkout && existWorkout[0].exercises)
-    },[existWorkout])
+        setWorkout(targetWorkout && targetWorkout.exercises)
+    },[targetWorkout])
 
     function onChangeMeasurmentOrRepeats(event, index) {
         const newWorkout = [...workout]
@@ -60,7 +66,7 @@ export default function EditWorkoutContainer() {
     }
 
     function onClickUpdateWorkout() {
-        dispatch(updateWorkout({id: existWorkout[0]._id, workout: workout}))
+        dispatch(updateWorkout({id: targetWorkout._id, workout: workout}))
     }
     
     if(workout) return <EditWorkoutForm

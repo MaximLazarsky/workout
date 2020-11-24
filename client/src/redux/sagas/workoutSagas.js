@@ -4,9 +4,9 @@ import {
     UPDATE_WORKOUT
 } from "../types"
 
-// import {
-//     checkIsAuth
-// } from "../actions/auth"
+import {
+    checkIsAuth
+} from "../actions/auth"
 
 import {
     fetchAddNewWorkout, 
@@ -17,6 +17,7 @@ import {
 const addUserNewWorkout = function*({payload}) {
     try {
         yield call(fetchAddNewWorkout, payload)
+        yield put(checkIsAuth())
     } catch(e) {
         console.log({e}) 
     }

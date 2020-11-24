@@ -12,6 +12,7 @@ export default function AddWorkoutContainer() {
     const classes = useStyles()
 
     const {exercises} = useSelector((state)=> state.user.currentUser)
+    const {date} = useSelector((state)=> state.user)
 
     const [workout, setWorkout] = useState([{
         exerciseId: exercises && exercises[0],
@@ -65,10 +66,10 @@ export default function AddWorkoutContainer() {
     }
 
     function onClickAddNewWorkout() {
-        dispatch(addNewWorkout(workout))
+        dispatch(addNewWorkout({exercises: workout, date: date}))
     }
 
-    if (exercises) return <AddWorkoutForm
+    if (exercises && exercises.length) return <AddWorkoutForm
         classes={classes}
         onClickAddExer={onClickAddExer}
         exercises={exercises}

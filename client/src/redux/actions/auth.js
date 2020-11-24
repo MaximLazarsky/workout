@@ -5,7 +5,8 @@ import {
         LOGOUT,
         VERIFY,
         REGISTER_USER,
-        CHECK_IS_AUTH
+        CHECK_IS_AUTH,
+        CHECK_INPUT_REGISTER
     } from '../types'
 
 export const getLoginAuth = (payload={}) => {
@@ -45,4 +46,8 @@ export const verify = (payload={}) => {
 export const registerUser = (payload={}) => ({
     type: REGISTER_USER,
     payload
+})
+
+export const checkInputRegister = () => ({
+    type: CHECK_INPUT_REGISTER
 })

@@ -7,6 +7,7 @@ export const LOGOUT = 'LOGOUT'
 export const VERIFY = 'VERIFY'
 export const REGISTER_USER = "REGISTER_USER"
 export const CHECK_IS_AUTH = 'CHECK_IS_AUTH'
+export const CHECK_INPUT_REGISTER = 'CHECK_INPUT_REGISTER'
 
 // TYPES for EXER_ACTIONS
 

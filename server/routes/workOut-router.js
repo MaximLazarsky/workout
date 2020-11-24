@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
         date = new Date(Date.now())
         dateToday = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
 
-        const workOut = new WorkOut({userId: req.user, exercises: req.body, date: req.body.date || dateToday}) 
+        const workOut = new WorkOut({userId: req.user, exercises: req.body.exercises, date: req.body.date || dateToday}) 
 
         await workOut.save()
 

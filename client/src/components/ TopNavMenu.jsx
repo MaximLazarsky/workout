@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useSelector } from 'react-redux';
-
+import {useHistory} from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { logout } from '../redux/actions/auth'
 
@@ -43,10 +43,12 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function TopNavMenu() {
 
-    const dispatch = useDispatch()
+  const history = useHistory()
 
-    const user = useSelector((state) => state.user.currentUser)
-    const {email} = user
+  const dispatch = useDispatch()
+
+  const user = useSelector((state) => state.user.currentUser)
+  const {email} = user
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -57,6 +59,11 @@ export default function TopNavMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function onClickLogout() {
+    dispatch(logout())
+    history.push('/sign-in')
+  }
 
   return (
     <div>
@@ -77,7 +84,7 @@ export default function TopNavMenu() {
         onClose={handleClose}
       >
         <StyledMenuItem 
-        onClick={()=>{dispatch(logout())}}
+        onClick={()=>{onClickLogout()}}
         >
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />

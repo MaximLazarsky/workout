@@ -21,7 +21,8 @@ export default function WorkoutExerItem({
     
         const classes = useStyles()
 
-     return(
+     return(       
+        <> {exercise.exerciseId && 
         <div className={classes.exerItem}> 
                     <div>
                         <InputLabel 
@@ -88,5 +89,6 @@ export default function WorkoutExerItem({
                         onClick = {()=>onClickDeleteExer(index)}
                     />
                 </div>    
+    }</>
     )
 }
