@@ -21,8 +21,6 @@ export default function EditWorkoutContainer() {
 
     const [workout, setWorkout] = useState(targetWorkout && targetWorkout.exercises)
 
-    console.log(targetWorkout, workoutList)
-
     useEffect(()=>{
         setWorkout(targetWorkout && targetWorkout.exercises)
     },[targetWorkout])

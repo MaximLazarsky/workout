@@ -70,6 +70,7 @@ export default function DashboardPage() {
                 </Button> 
             </div>
             <InfiniteCalendar
+                minDate={currentDate}
                 Component={withDateSelection(withHighlightedDates(Calendar))}
                 width={'70%'}
                 height={400}

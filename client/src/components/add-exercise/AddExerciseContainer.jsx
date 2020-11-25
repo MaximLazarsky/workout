@@ -20,9 +20,13 @@ export default function NewExercisePage() {
     };
 
     const onClickAddExer = () => {
-      dispatch(addNewExer({userId, exerName, mesurType}))
-      setMesurType('')
-      setExerName('')
+        if(exerName && mesurType) {
+            dispatch(addNewExer({userId, exerName, mesurType}))
+            setMesurType('')
+            setExerName('exercise was created')
+        } else {
+            setExerName("Please fill in the input fields") 
+        }
     }
 
     return <AddExerciseForm

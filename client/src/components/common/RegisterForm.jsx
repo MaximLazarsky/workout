@@ -11,11 +11,10 @@ export default function RegisterForm({
     repeatPassword, 
     setRepeatPassword, 
     onRegisterClick,
-    InfoMessage,
-    isInputRegister,
-    onRegisterBlur
+    isInputRegister
   }) {
 
+    if(isInputRegister) return <h1> You are registered please confirm your email </h1>
     return (
           <form className={classes.form} noValidate autoComplete="off"> 
             <div>
@@ -54,11 +53,11 @@ export default function RegisterForm({
               className={classes.input} 
               color="primary" 
               onClick={() => onRegisterClick()}
-              onBlur={() => onRegisterBlur()}
+              // onBlur={() => onRegisterBlur()}
               >
               Sign Up
             </Button>
-            {!!isInputRegister ? InfoMessage(): <></>}
+           
           </form>
       )
 }

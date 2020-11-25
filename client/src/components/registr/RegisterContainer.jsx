@@ -3,7 +3,9 @@ import useStyles from "./register-form-styles"
 import { useState } from "react"
 import { registerUser, checkInputRegister } from "../../redux/actions/auth"
 import { useDispatch, useSelector } from "react-redux"
-import RefisterForm from '../common/RegisterForm'
+import RegisterForm from '../common/RegisterForm'
+import validateEmail from '../../services/validateEmail'
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function RegisterContainer() {
     const [email, setEmail] = useState ("")
@@ -12,40 +14,31 @@ export default function RegisterContainer() {
     const dispatch = useDispatch()
     
     const onRegisterClick = () => {
+        const message = InfoMessage()
+        if(message) {
+            dispatch(setTostMessage(message))
+          return
+        }
         dispatch(checkInputRegister())
-        if(password === repeatPassword) dispatch(registerUser({email, password}))
-    }
-
-    const onRegisterBlur = () => {
-        dispatch(checkInputRegister())
+        dispatch(registerUser({email, password}))
     }
 
     const { isInputRegister } = useSelector((state) => state.user)
 
     const InfoMessage = () => {
         if(password !== repeatPassword ) {
-            return(
-                <h4> Your password do not match  </h4>
-            )
-         } else if(email.length <= 0) {
-            return(
-                <h4> Please, enter your email </h4>
-            )
+                return "Your password do not match"
+         } else if(!validateEmail(email)) {
+                return "Please check email"
          } else if(password.length <=0) {
-             return(
-                 <h4> Please, enter password </h4>
-             )
+                return "Please, enter password"
          }
-          else {
-            return (
-                <h4> You are registered please confirm your email  </h4>
-            )
-         }
+         return ""
     }
     
     const classes = useStyles();
     
-    return <RefisterForm
+    return<RegisterForm
         classes={classes}
         email={email}
         setEmail={setEmail}
@@ -54,8 +47,7 @@ export default function RegisterContainer() {
         repeatPassword={repeatPassword}
         setRepeatPassword={setRepeatPassword}
         onRegisterClick={onRegisterClick}
-        InfoMessage={InfoMessage}
         isInputRegister={isInputRegister}
-        onRegisterBlur={onRegisterBlur}
     />
+
 }

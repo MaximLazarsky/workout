@@ -6,7 +6,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 export default function AddExerciseForm({classes, exerName, setExerName, mesurType, handleChange, onClickAddExer}) {
-
     return (
           <form className={classes.form} noValidate autoComplete="off"> 
             <div>

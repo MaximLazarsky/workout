@@ -23,3 +23,7 @@ export const UPDATE_WORKOUT = "UPDATE_WORKOUT"
 
 // TYPES for DASHBOARD_ACTION
  export const SET_DATE = "SET_DATE"
+
+// TYPE for TOST
+
+export const SET_TOST_MESSAGE = "SET_TOST_MESSAGE"

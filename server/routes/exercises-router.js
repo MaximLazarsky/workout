@@ -68,7 +68,6 @@ router.post('/:userId', async (req, res) => {
         const exercise = new Exercises({userId: req.params.userId, exerName: req.body.exerName, mesurType: req.body.mesurType})
         await exercise.save()
     
-
         const user = await User.findById(req.params.userId)
         await user.exercises.push(exercise.id)
         await user.save()

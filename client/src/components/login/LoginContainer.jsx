@@ -3,8 +3,9 @@ import {useHistory} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { getLoginAuth} from "../../redux/actions/auth"
 import useStyles from "./login-form-styles"
-
+import validateEmail from '../../services/validateEmail'
 import LoginForm from "../common/LoginForm"
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function LoginContainer() {
     const classes = useStyles();
@@ -16,22 +17,23 @@ export default function LoginContainer() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState ("")
 
-    function validateEmail(email) {
-      let regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return regex.test(email)
-    }
+    const InfoMessage = () => {
+        if(!validateEmail(email)) {
+            return "Please check email"
+      }else if(password.length <=0) {
+            return "Please, enter password"
+      }
+      return ""
+  }
 
     const onLoginClick = async () => {
+      const message = InfoMessage()
+        if(message) {
+          dispatch(setTostMessage(message))
+          return
+        }
       dispatch(getLoginAuth({password, email}))
-      if (!validateEmail(email) ) {
-        setEmail("It is not EMAIL")
-      } else if(password.length <= 0) {
-        setEmail("Please enter your password")
-      } else if(!isAuth){
-        setEmail("Email or password wrong")
-      } else if (isAuth) {
-        history.push('/dashboard')
-      }
+      history.push('/dashboard')
     }
 
     return <LoginForm

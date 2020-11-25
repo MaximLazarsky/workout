@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 import {checkIsAuth} from "./redux/actions/auth"
 import {userIsAuthSelector} from './redux/selectors'
 import './pages/dashboard/style.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -23,6 +25,12 @@ function App() {
       history.push('/dashboard')
     }    
   },[])
+
+  const {tostMessage} = useSelector((state)=> state.user)
+
+  useEffect(() => {
+    if(tostMessage) toast(tostMessage)
+  },[tostMessage])
 
   const routesArr = !isUserAuth && !localStorage.getItem('Authorization') ? AuthRoutes : IsAuthRoutes
 
@@ -37,6 +45,17 @@ function App() {
                   ))}
                   <Route path="/verify" component={Verify} />
                 </Switch>
+                <ToastContainer 
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+              />
               </div>
             </Router>
           </Container>

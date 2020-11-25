@@ -26,6 +26,7 @@ const addUserNewWorkout = function*({payload}) {
 const updateUserWorkout = function* ({payload}) {
     try {
         yield call(fetchUpdateUserWorkout, payload)
+        yield put(checkIsAuth())
     } catch(e) {
         console.log({e})
     }

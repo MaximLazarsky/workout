@@ -13,6 +13,9 @@ export default function AddWorkoutContainer() {
 
     const {exercises} = useSelector((state)=> state.user.currentUser)
     const {date} = useSelector((state)=> state.user)
+    const workoutList = useSelector((state)=>state.user.currentUser.workout)
+
+    const targetWorkout = workoutList && workoutList.find((el) => el.date === date)
 
     const [workout, setWorkout] = useState([{
         exerciseId: exercises && exercises[0],
@@ -69,6 +72,7 @@ export default function AddWorkoutContainer() {
         dispatch(addNewWorkout({exercises: workout, date: date}))
     }
 
+    if (targetWorkout && targetWorkout.date === date) return <h1> Workout was created, you can edit it. </h1>
     if (exercises && exercises.length) return <AddWorkoutForm
         classes={classes}
         onClickAddExer={onClickAddExer}
