@@ -1,19 +1,15 @@
 FIT TRAINER APP
 
-Already done:
+clone this repo
 
-1) back-end part.
-2)Front-end (TODO debug, ui/ux): 
-  -sign in (without validation);
-  -sing up (without validation);
-  -verify;
-  -new exercise (functionality done, but TODO ui/ux);
-  -edit exercise (buttons to hange order exercises TODO);
-  -new workout(not done);
+Install depedencies:
+1. cd server
+2. npm install
+3. cd ../client
+4. npm install
 
-TODO: 
-1) Front-end debug.
-2)Front-end ui/ux.
-3)Front-end pages:
-  -dashboard;
-  -Edit workout;
+Start App:
+1. cd ../server
+2. npm run dev
+3. cd ../client
+4. npm start
