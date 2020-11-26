@@ -5,6 +5,7 @@ import { deleteExer, updateExercsises} from '../../redux/actions/exer'
 import changeOrder from '../../services/changeOrderServices'
 import useStyles from './edit-exercises-form-styles'
 import EditExercisesForm from '../common/EditExercisesForm'
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function EditExercisesConteiner() {
     const correctExerList = () => { return !exercisesList ? exercises && exercises : exercisesList }
@@ -37,7 +38,8 @@ export default function EditExercisesConteiner() {
     }
 
     function onClickUpdate() {
-        dispatch(updateExercsises(correctExerList()))   
+        dispatch(updateExercsises(correctExerList())) 
+        dispatch(setTostMessage("Exercises were updeted"))
     }
 
     if (exercises && exercises.length) return <EditExercisesForm 

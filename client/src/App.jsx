@@ -13,8 +13,12 @@ import {userIsAuthSelector} from './redux/selectors'
 import './pages/dashboard/style.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from 'react-loader-spinner'
+import {userLoadingSelector} from './redux/selectors'
 
 function App() {
+
+  const isUserLoading = useSelector(userLoadingSelector)
 
   const dispatch = useDispatch()
 
@@ -43,6 +47,14 @@ function App() {
                   {routesArr.map((props, index) => (
                     <Route path={props.path} key={index} component={props.component} />
                   ))}
+                  {isUserLoading &&  <Loader
+                    type="Puff"
+                    color="#3f51b5"
+                    height={100}
+                    width={100}
+                    timeout={3000}
+                    style ={{margin: "50vh auto"}}
+                  />}
                   <Route path="/verify" component={Verify} />
                 </Switch>
                 <ToastContainer 

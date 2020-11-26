@@ -1,7 +1,8 @@
 import {
     ADD_NEW_EXER,
     DELETE_EXER,
-    UPDATE_EXERCISES
+    UPDATE_EXERCISES,
+    TOGGLE_USER_LOADING
 } from '../types'
 
 import { takeLatest, put, call } from "redux-saga/effects"
@@ -36,9 +37,11 @@ const deleteUserExer = function*({payload}) {
 }
 
 const updateUserExercisesList = function*({payload}) {
+    yield put({type: TOGGLE_USER_LOADING})
     try {
         yield call(fetchUpdateUserExer, payload)
         yield put(checkIsAuth())
+        yield put({type: TOGGLE_USER_LOADING})
     } catch(e) {
         console.log({e}) 
     }

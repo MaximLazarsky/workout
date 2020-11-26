@@ -34,20 +34,26 @@ const loginUser = function*({payload}) {
 
 const getAuthUserData = function*() {
 
+    yield put({type: TOGGLE_USER_LOADING})
+
     try {
         const data = yield call(fetchGetUserData)
-
         yield put(getUserData(data))
         yield put(toggleUserIsAuth(true))
+        yield put({type: TOGGLE_USER_LOADING})
     }catch(e) {
         console.log({e}) 
     }
 }
 
 const logoutUser = function*() {
+
+    yield put({type: TOGGLE_USER_LOADING})
+
     try {
         localStorage.removeItem('Authorization')
         yield put(toggleUserIsAuth(false))
+        yield put({type: TOGGLE_USER_LOADING})
     } catch(e) {
         console.log({e})
     }
@@ -70,9 +76,11 @@ const verifyUser = function*({payload}) {
 
 const registrationUser = function*({payload}) {
     const {email, password} = payload
+    yield put({type: TOGGLE_USER_LOADING})
 
     try {
         yield call(fetchRegisterUser, {email, password})
+        yield put({type: TOGGLE_USER_LOADING})
     } catch(e) {
         console.log({e}) 
     }

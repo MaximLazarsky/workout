@@ -9,3 +9,8 @@ export const formatDate = (date) => {
     const formatedDate = `${year}-${month}-${day}`
     return formatedDate
 }
+
+export const unFormatDate = (date) => {
+    const targetArr = date.split('-')
+    return new Date(parseInt(targetArr[0]), parseInt(targetArr[1]) - 1, parseInt(targetArr[2]))
+  }

@@ -9,7 +9,7 @@ import { withProps } from 'recompose';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom'
 import { setDate } from '../../redux/actions/dashboard'
-import { formatDate } from '../../services/dateFormat'
+import { formatDate, unFormatDate } from '../../services/dateFormat'
 
 const enhanceDay = highlighted => withProps(props => {
     return {
@@ -25,7 +25,11 @@ export default function DashboardPage() {
 
     const history = useHistory()
 
-    let currentDate = new Date();
+    const today = new Date()
+
+    const date = useSelector((state)=> state.user.date)
+
+    const currentDate = unFormatDate(date)
 
     const dispatch = useDispatch()
 
@@ -70,7 +74,7 @@ export default function DashboardPage() {
                 </Button> 
             </div>
             <InfiniteCalendar
-                minDate={currentDate}
+                minDate={today}
                 Component={withDateSelection(withHighlightedDates(Calendar))}
                 width={'70%'}
                 height={400}

@@ -4,6 +4,7 @@ import useStyles from './new-workout-styles'
 import AddWorkoutForm from '../common/AddWorkoutForm'
 import {addNewWorkout} from '../../redux/actions/workout'
 import changeOrder from '../../services/changeOrderServices'
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function AddWorkoutContainer() {
 
@@ -70,6 +71,7 @@ export default function AddWorkoutContainer() {
 
     function onClickAddNewWorkout() {
         dispatch(addNewWorkout({exercises: workout, date: date}))
+        dispatch(setTostMessage("Workout was created"))
     }
 
     if (targetWorkout && targetWorkout.date === date) return <h1> Workout was created, you can edit it. </h1>

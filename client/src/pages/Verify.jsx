@@ -89,7 +89,7 @@ export default function VerifyPage(props) {
               VERIFY EMAIL
             </Button>
           </form>
-          {isUserLoading && <h1>Loading...</h1>}
+          {/* {isUserLoading && <h1>Loading...</h1>} */}
         </div>
       )
 }

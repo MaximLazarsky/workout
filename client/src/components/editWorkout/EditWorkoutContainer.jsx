@@ -4,6 +4,7 @@ import useStyles from '../add-workout/new-workout-styles'
 import EditWorkoutForm from '../common/EditWorkoutForm'
 import {updateWorkout} from '../../redux/actions/workout'
 import changeOrder from '../../services/changeOrderServices'
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function EditWorkoutContainer() {
 
@@ -65,6 +66,7 @@ export default function EditWorkoutContainer() {
 
     function onClickUpdateWorkout() {
         dispatch(updateWorkout({id: targetWorkout._id, workout: workout}))
+        dispatch(setTostMessage("Workout was updated"))
     }
     
     if(workout) return <EditWorkoutForm

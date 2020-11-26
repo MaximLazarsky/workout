@@ -4,6 +4,7 @@ import { useState } from "react"
 import { addNewExer} from '../../redux/actions/exer'
 import AddExerciseForm from '../common/AddExerciseForm'
 import useStyles from './add-exercise-styles'
+import { setTostMessage } from "../../redux/actions/tost"
 
 export default function NewExercisePage() {
 
@@ -19,13 +20,23 @@ export default function NewExercisePage() {
         setMesurType(event.target.value)
     };
 
-    const onClickAddExer = () => {
+    const InfoMessage = () => {
         if(exerName && mesurType) {
+                return "exercise was created"
+         } else {
+                return "Please, enter exercise name and measurment type"
+         }
+    }
+
+    const onClickAddExer = () => {
+        const message = InfoMessage()
+        if(message === "exercise was created") {
             dispatch(addNewExer({userId, exerName, mesurType}))
             setMesurType('')
-            setExerName('exercise was created')
+            setExerName('')
+            dispatch(setTostMessage(message))
         } else {
-            setExerName("Please fill in the input fields") 
+            dispatch(setTostMessage(message))
         }
     }
 

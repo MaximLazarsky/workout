@@ -22,7 +22,7 @@ export default function LoginPage() {
     return (
         <div className={classes.main}>
           <LoginContainer/>
-          {isUserLoading && <h1>Loading...</h1>}
+          {/* {isUserLoading && <h1>Loading...</h1>} */}
         </div>
       )
 }
